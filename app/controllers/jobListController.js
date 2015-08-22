@@ -615,14 +615,14 @@ function ($scope,
         
     };
     
-    /*$($document[0]).on('click', function (EVENT) {
+    $($document[0]).on('click', function (EVENT) {
         if(~EVENT.target.className.indexOf('k-')) {
             return;
         }
         $timeout(function () {
             $scope.openFullForm = false;
         }, 0);
-    });*/
+    });
 
     $('#app-full-form').on('click', function (event) {
         event.stopPropagation();

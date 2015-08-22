@@ -1,6 +1,6 @@
 var __isDevelopment = false;
 
-if(window.location.host.indexOf('localhost') > -1){
+if(window.location.host.indexOf('localhost') > -1){    
     __isDevelopment = true;
 }
 
@@ -28,7 +28,7 @@ var serverURL = null;
 if(__isDevelopment){
     serverURL="http://localhost:1444";   
 }else{
-    //serverURL = "https://service.cloudboost.io";    
+    serverURL="http://bgbackend.herokuapp.com";    
 }
 
 app.config(function(uiGmapGoogleMapApiProvider) {
