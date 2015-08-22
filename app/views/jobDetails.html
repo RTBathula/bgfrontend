@@ -1,0 +1,139 @@
+<section class=""> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8 bg-color-white" ng-init="init()">
+                      <div class="row inner-div2">
+                          <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="cf">
+                                          <h5 class="pull-right"><strong>{{jobDetails.get("updatedAt")  | date:'medium'}}</strong></h5>
+                                      </div>
+                                      <div class="compantImg">
+                                          <img src="{{jobDetails.get('_company').get('logo').url}}">
+                                      </div>
+                                      <div>
+                                      </div>
+                                      <h3 class="companyName">
+                                        <strong>{{jobDetails.get('_company').get('name')}}</strong>
+                                      </h3>
+
+                                      <a ng-if="jobDetails.get('_company') && jobDetails.get('_company').get('url')!='http://'" href="{{jobDetails.get('_company').get('url')}}" target="_blank" class="companyWebsite">{{jobDetails.get('_company').get('url')}}</a>
+
+                                      <div class="companyAbout">
+                                          <p>{{jobDetails.get('_company').get('about')}}
+                                          </p>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-12" style="margin-top:12px;">
+                                     <div ng-if="jobDetails.get('title')" class="parent">
+                                          <h4><strong>Title</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>{{jobDetails.get('title')}}</p>
+                                     </div>
+
+                                     <div ng-if="jobDetails.get('experience')" class="parent margin-top-25px">
+                                          <h4><strong>Experience</strong></h4>
+                                     </div>
+                                     <div ng-if="jobDetails.get('experience') && jobDetails.get('experience')==0" class="child">
+                                          <p>Fresher</p>
+                                     </div>
+                                     <div ng-if="jobDetails.get('experience') && jobDetails.get('experience')>0" class="child">
+                                          <p>{{jobDetails.get('experience')}}&nbsp; years</p>
+                                     </div>
+
+                                     <div ng-if="jobDetails.get('_jobType').get('name')" class="parent margin-top-25px">
+                                          <h4><strong>Job type</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>{{jobDetails.get('_jobType').get('name')}}</p>
+                                     </div>
+
+                                      <div ng-if="jobDetails.get('companyLocationDetails') && jobDetails.get('companyLocationDetails').address" class="parent margin-top-25px">
+                                          <h4><strong>Company Location</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>{{jobDetails.get('companyLocationDetails').address}}</p>
+                                     </div>
+
+                                     <div ng-if="jobDetails.get('description')" class="parent margin-top-25px">
+                                          <h4><strong>Description</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>{{jobDetails.get('description')}}
+                                          </p>
+                                     </div>
+
+                                     <div ng-if="jobDetails.get('_interviewType') && jobDetails.get('_interviewType').get('name')" class="parent margin-top-25px">
+                                          <h4><strong>Interview Type</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>{{jobDetails.get('_interviewType').get('name')}}
+                                          </p>
+                                     </div>
+
+                                      <div ng-if="jobDetails.get('dateTime')" class="parent margin-top-25px">
+                                          <h4><strong>DateTime</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>{{jobDetails.get('dateTime') | date:'medium'}}
+                                          </p>
+                                     </div>
+
+                                     <div ng-if="jobDetails.get('resumeTo')" class="parent margin-top-25px">
+                                          <h4><strong>Email</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>
+                                              {{jobDetails.get('resumeTo')}}
+                                          </p>
+                                     </div>
+
+                                      <div ng-if="jobDetails.get('phone')"  class="parent margin-top-25px">
+                                          <h4><strong>Phone</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>
+                                              {{jobDetails.get('phone')}}
+                                          </p>
+                                     </div>
+
+                                     <div ng-if="jobDetails.get('applyLink')!='http://'" class="parent margin-top-25px">
+                                          <h4><strong>Apply Here</strong></h4>
+                                     </div>
+                                     <div ng-if="jobDetails.get('applyLink')!='http://'" class="child">
+                                          <p style="font-size:18px;">
+                                              <a href="{{jobDetails.get('applyLink')}}" target="_blank">Apply Here</a>
+                                          </p>
+                                     </div>
+
+
+                                     <div ng-if="jobDetails.get('walkInLocationDetails') && jobDetails.get('walkInLocationDetails').address" class="parent margin-top-25px">
+                                          <h4><strong>Address</strong></h4>
+                                     </div>
+                                     <div class="child">
+                                          <p>
+                                              {{jobDetails.get('walkInLocationDetails').address}}
+                                          </p>
+                                     </div>
+                                  
+                                     <!--google map-->
+                                     <div ng-if="jobDetails.get('walkInLocationGeopoint')">
+                                          <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                                              <ui-gmap-marker idkey='marker.id' coords='marker.coords'></ui-gmap-marker>
+                                          </ui-gmap-google-map>
+                                     </div>                   
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>                </div>
+            </div>
+        </div>
+    </div>
+</section>

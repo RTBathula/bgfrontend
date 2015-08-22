@@ -1,0 +1,118 @@
+<div class="row wrapper border-bottom white-bg page-heading" ng-init="init()">
+    <div class="col-sm-12">
+        <h2>View/Edit/Post a Job</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+    <form role="form" name="jobForm" ng-submit="upsertJob(jobForm.$valid)">    
+        <div class="wrapper wrapper-content">
+            <div class="row animated fadeInRightBig">
+                <div class="col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1 panel panel-default">
+                    <div class="panel-title"><h2>Company</h2></div>
+                    <div class="panel-body">
+                        <label>Company Name</label>
+                        <div class="form-group">
+                            <input ng-model="companyModel.name" class="form-control" type="text" placeholder="Name" required/>
+                        </div>
+                        <label>Company About</label>
+                        <div class="form-group">
+                            <textarea ng-model="companyModel.about" class="form-control" type="text"
+                                                          placeholder="About"></textarea>
+                        </div>
+                        <label>Company URL</label>
+                        <div class="form-group">
+                            <input ng-model="companyModel.url" class="form-control" type="text" placeholder="URL"/>
+                        </div>
+                        <label>Company Location</label>
+                        <div class="form-group">
+                            <input ng-model="companyLocation" g-places-autocomplete options="autocompleteOptions" class="form-control" type="text" placeholder="Location" required/>
+                        </div>
+                        <div class="form-group">
+                            <label>Company Industry</label>
+                            <select ng-model="companyModel._industry" placeholder="Type of Industry" title="Type of Industry" class="form-control">
+                                <option ng-repeat="cIndustry in companyIndustryList"  value="{{cIndustry}}">{{cIndustry.get("name")}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Company Logo</label>                            
+                            <div>
+                                <!--Add-->
+                                <div ng-show="!imageDisplay">
+                                    <input class="form-control" type="file" id="upsert-logo" placeholder="Logo"/>
+                                    
+                                    <p ng-if="jobId" style="cursor:pointer; text-decoration:underline;color:red;" ng-click="cancelUploadingNew()">Cancel</p>
+                                </div>
+
+                                <!--Image Display-->
+                                <div ng-show="imageDisplay">
+                                    <div class="cropArea" style="display: none;">
+                                        <img-crop image="companyLogo" area-type="square" result-image="croppedCompanyLogo"></img-crop>
+                                    </div>
+
+                                    <div style="position: relative">
+                                        <img id="selected-logo" class="croppedCompanyLogo" ng-src="{{croppedCompanyLogo}}"/>
+                                        <div class="croppedImgCloseBtn3" ng-click="clearCompanyLogo()">X</div>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1 panel panel-default">
+                    <div class="panel-title"><h2>Job</h2></div>
+                    <div class="panel-body">
+                        <label>Job Title</label>
+                        <div class="form-group">
+                            <input ng-model="jobModel.title" class="form-control" type="text" placeholder="Title" required/>
+                        </div>
+                        <label>Job Description</label>
+                        <div class="form-group">
+                            <textarea ng-model="jobModel.description" class="form-control" type="text"
+                                                          placeholder="Description" required></textarea>
+                        </div>
+                        <label>Job DateTime</label>
+                        <div class="form-group">                       
+                            <input  ng-model="jobModel.dateTime" kendo-date-time-picker style="width: 100%"  placeholder="DateTime"/>
+                        </div>
+                        <label>Job ApplyLink</label>
+                        <div class="form-group">
+                            <input ng-model="jobModel.applyLink" class="form-control" type="text" placeholder="Apply link"/>
+                        </div>
+                        <label>Job Email</label>
+                        <div class="form-group">
+                            <input ng-model="jobModel.resumeTo" class="form-control" type="email" placeholder="Resume to" required/>
+                        </div>
+                        <label>Job Phone</label>
+                        <div class="form-group">
+                            <input ng-model="jobModel.phone" class="form-control" type="tel" placeholder="Phone"/>
+                        </div>
+                        <label>Job InterviewType</label>
+                        <div class="form-group">
+                            <select placeholder="interview type" class="form-control" ng-model="jobModel._interviewType">
+                                <option ng-repeat="itype in interviewTypeList"  value="{{itype}}">{{itype.get("name")}}</option>
+                            </select>
+                        </div>
+                        <label>Job Experience</label>
+                        <div class="form-group">
+                            <input ng-model="jobModel.experience" class="form-control" type="text" placeholder="Experience" required/>
+                        </div>
+                        <label>Job JobType</label>
+                        <div class="form-group">
+                            <select placeholder="job type" class="form-control" ng-model="jobModel._jobType">
+                                <option ng-repeat="jtype in jobTypeList"  value="{{jtype}}">{{jtype.get("name")}}</option>
+                            </select>
+                        </div>
+                        <label>Job Walk In</label>
+                        <div class="form-group">
+                            <input ng-model="walkInLocation" autokomplete class="form-control" type="text" placeholder="Walk In location"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary col-md-offset-9 col-lg-offset-9 col-md-1 col-lg-1">Submit</button>
+        </div>
+    </form>
+    </div>
+</div>

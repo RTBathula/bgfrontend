@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html ng-app="bullgruntOfficial">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>bullgrunt | Official</title>
+
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="assets/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="assets/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="../assets/css/kendo.common.min.css" rel="stylesheet">
+    <link href="../assets/css/kendo.default.min.css" rel="stylesheet"> 
+    <link href="../assets/js/AmaranJS/dist/css/amaran.min.css" rel="stylesheet"/>     
+    <link href="../bower_components/intl-tel-input/build/css/intlTelInput.css" rel="stylesheet"/>
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="../assets/css/app.css" rel="stylesheet">  
+    
+
+    <!--Cloudboost.io-->
+    <script type="text/javascript" src="https://cloudboost.io/js-sdk/1.0.78.js"></script>
+
+</head>
+
+<body ng-controller="indexController">
+    <div id="wrapper">
+        <!--Sidepanel-->
+        <nav class="navbar-default navbar-static-side" role="navigation" ng-include="'app/views/common/sidepanel.html'">
+        </nav>
+        <!--/Sidepanel-->
+
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+                <!--Header-->
+                <div class="row border-bottom">
+                        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>           
+                        </div>
+                            <ul class="nav navbar-top-links navbar-right">               
+                                <li>
+                                    <a ng-click="logOut()">
+                                        <i class="fa fa-sign-out"></i> Log out
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </nav>
+                </div>
+                <!--/Header-->
+
+                <!--Dynamic Content-->
+                <ui-view></ui-view>
+                <!--/Dynamic Content-->
+
+                <!--Footer-->
+                <div class="footer" ng-include="'app/views/common/footer.html'">                    
+                </div>
+                <!--/Footer-->
+        </div>
+    </div>   
+
+    <!-- Mainly scripts -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>   
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Flot -->
+    <script src="assets/js/plugins/flot/jquery.flot.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="assets/js/plugins/flot/jquery.flot.pie.js"></script>
+
+    <!-- Peity -->
+    <script src="assets/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="assets/js/demo/peity-demo.js"></script>  
+
+    <!-- jQuery UI -->   
+
+    <!-- GITTER -->
+    <script src="assets/js/plugins/gritter/jquery.gritter.min.js"></script> 
+    <script type="text/javascript" src="../assets/js/AmaranJS/dist/js/jquery.amaran.min.js"></script>  
+
+    <!-- Sparkline -->
+    <script src="assets/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Sparkline demo data  -->
+    <script src="assets/js/demo/sparkline-demo.js"></script> 
+
+    <!-- Custom and plugin javascript -->
+    <script src="assets/js/inspinia.js"></script>
+    <script src="assets/js/plugins/pace/pace.min.js"></script>
+    <script src="../assets/js/kendo.all.min.js"></script>
+    <script src="../assets/js/ng-img-crop.js"></script>
+    <script src="../bower_components/angular-elastic/elastic.js"></script>
+    <script src="../bower_components/underscore/underscore-min.js"></script>
+    <script src='../bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js'></script>
+    <script src="../bower_components/intl-tel-input/lib/libphonenumber/build/utils.js"></script> 
+    <script src="../bower_components/intl-tel-input/build/js/intlTelInput.min.js"></script> 
+
+    <!--Google Maps-->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script> 
+    <script src="../bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script> 
+
+    <!--Angular Main-->
+    <script type="text/javascript" src="app/config/app.js"></script>
+    <script type="text/javascript" src="app/config/route.js"></script>
+
+    <!--ValidationServices-->
+    <script src="app/validationServices/validationServices.js"></script>
+
+    <!--ModelTemplates-->
+    <script src="app/modelTemplates/userModel.js"></script>
+    <script src="app/modelTemplates/companyModel.js"></script>
+    <script src="app/modelTemplates/jobModel.js"></script>
+
+    <!--Static Data Services-->
+    <script src="app/staticDataServices/staticDataServices.js"></script>
+
+    <!--services-->
+    <script src="app/services/jobTypeServices.js"></script>
+    <script src="app/services/interviewTypeServices.js"></script>
+    <script src="app/services/companyIndustryServices.js"></script>
+    <script src="app/services/userServices.js"></script>
+    <script src="app/services/companyServices.js"></script>
+    <script src="app/services/jobServices.js"></script>
+
+    <!--controllers-->
+    <script src="app/controllers/indexController.js"></script>       
+    <script src="app/controllers/dataOperators/dataEntryViewController.js"></script> 
+    <script src="app/controllers/dataOperators/dataEntryUpsertController.js"></script> 
+    <script src="app/controllers/callOperators/callSearchController.js"></script> 
+    <script src="app/controllers/callOperators/callSearchResultsController.js"></script>  
+
+    <!--Directives-->
+    <script type="text/javascript" src="app/directives/commonDirectives.js"></script>
+
+</body>
+
+</html>

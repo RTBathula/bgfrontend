@@ -1,0 +1,55 @@
+
+    <!--DataEntry Operator-->
+    <div ng-show="officialUser.get('isDataEntry')" class="sidebar-collapse" ng-show="false">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> 
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{officialUser.get('name')}}</strong>
+
+                         </span> <span class="text-muted text-xs block">Data Entry</span>
+                        </span> 
+                    </a>                           
+                </div>
+                <div class="logo-element">
+                    bO
+                </div>
+            </li>
+            <li ng-class="{true: 'active'}[page=='companyDashboard']">
+                <a href="#/data/view"><i class="fa fa-bar-chart"></i> <span class="nav-label">View jobs</span></a>
+            </li>
+            <li ng-class="{true: 'active'}[page=='companyDashboard']">
+                <a href="#/data/upsert/"><i class="fa fa-bar-chart"></i> <span class="nav-label">Post a job</span></a>
+            </li>                    
+        </ul>
+
+    </div>
+
+
+    <!--Call Operator-->
+    <div ng-show="officialUser.get('isCallOperator')" class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> 
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{officialUser.get('name')}}</strong>
+
+                         </span> <span class="text-muted text-xs block">Call Operator</span>
+                        </span> 
+                    </a>                           
+                </div>
+                <div class="logo-element">
+                    bO
+                </div>
+            </li>
+            <li ng-class="{true: 'active'}[page=='companyDashboard']">
+                <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">Search jobs</span></a>
+            </li>
+            <li ng-class="{true: 'active'}[page=='companyDashboard']">
+                <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">View SMS Data</span></a>
+            </li>                    
+        </ul>
+
+    </div>
+        
+        

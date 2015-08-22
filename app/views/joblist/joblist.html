@@ -1,0 +1,943 @@
+
+<section class="joblist-page" style="margin-top:-20px;" lr-infinite-scroll="addMoreJobs"> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="flex-wrapper" ng-init="init()">
+
+                        <!--Filter row-->
+                        <div class="col-md-3 col-xs-12  filters" ng-include="'app/views/joblist/job-list-filters.html'">   
+                        </div>
+
+                        <div class="col-md-5 col-xs-12  posh-list">
+                            <!--Smart Input Widget-->
+                            <div class="row content-div">
+                                <div class="bg-color-white" style="border:1px solid #B8B8B8; width:100%; padding:0.5px;">
+                                    <!--partial view-->
+                                    <div ng-hide="openFullForm" ng-click="kuljaSimSim($event)">
+                                        <div class="smartWidget-Input">
+                                            <input type="text" name="fname" placeholder="Post a job here for free"
+                                                   style="font-size:16px; color:black;">
+                                        </div>
+                                    </div>
+                                    <!--/partial view-->
+
+                                    <div id="app-full-form" role="tabpanel" ng-show="openFullForm">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active">
+                                                <a href="#job" ng-click="setCategory($event, 'job');"
+                                                   aria-controls="home" role="tab" data-toggle="tab">Job</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#company" ng-click="setCategory($event, 'company')"
+                                                   aria-controls="profile" role="tab" data-toggle="tab">Company</a>
+                                            </li>
+                                        </ul>
+                                        
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active sw-tablePanel-minheight" id="job">
+                                                <!--Open up form-->
+                                                <div>
+                                                    <!--CompanyName-->
+                                                    <div class="smartWidget-Input">
+                                                        <input type="text" ng-model="companyModel.name" placeholder="Company Name" data-toggle="tooltip" data-placement="right" title="Company Name">
+                                                    </div>
+                                                    <!--Job Title-->
+                                                    <div class="smartWidget-Input">
+                                                        <input type="text" ng-model="jobModel.title" name="title" placeholder="Job Title" data-toggle="tooltip" data-placement="right" title="Job Title">
+                                                    </div>
+                                                    <!--Job Description-->
+                                                    <div class="smartWidget-Input">
+                                                        <textarea msd-elastic ng-model="jobModel.description" data-toggle="tooltip" data-placement="right" title="Describe this job"
+                                                                  placeholder="Describe this job, education,skills"></textarea>
+                                                    </div>         
+                                                    <!--Experience required-->                      
+                                                    <div class="smartWidget-Input" >                                  
+                                                        <input type="text" ng-model="jobModel.experience" name="experience" placeholder="Experience" data-toggle="tooltip" data-placement="right" title="Experience">
+                                                    </div>
+
+                                                    <!--Resume to(Email)-->
+                                                    <div class="smartWidget-Input">
+                                                        <input type="text" ng-model="jobModel.resumeTo" name="mail" placeholder="ResumeTo(email)" data-toggle="tooltip" data-placement="right" title="ResumeTo(email)" >
+                                                    </div>
+
+                                                    <!--Company Location-->
+                                                    <div class="smartWidget-Input">
+                                                       
+                                                        <input ng-model="companyLocation" g-places-autocomplete type="text" name="clocation"  id="comlocation" placeholder="Company Location"  data-toggle="tooltip" data-placement="right" title="Company Location">  
+                                                               
+                                                    </div>
+
+                                                    <!--Optional Fields-->
+
+                                                    <!--Logo-->
+                                                    <div  style="display:none" id="add-logo" class="add-logo-bx">
+
+                                                        <!--Hidden File Input selector-->
+                                                        <div>
+                                                            <input type="file" id="logo-input" style="display:none"/>
+                                                        </div>
+
+                                                        <!--Image Display-->                                   
+                                                        <div class="cropArea" style="display: none;">
+                                                            <img-crop image="companyLogo" area-type="square" result-image="croppedCompanyLogo"></img-crop>
+                                                        </div>
+
+                                                        <div style="position: relative">
+                                                            <img id="selected-logo" class="croppedCompanyLogo" ng-src="{{croppedCompanyLogo}}"/>
+                                                            <div class="croppedImgCloseBtn2" ng-click="clearCompanyLogo()">X</div>
+                                                        </div>
+                                                    </div> 
+
+                                                     <!--Walk in Location-->
+                                                    <div class="smartWidget-Input" style="display: none" id="add-walkin">
+                                                       
+                                                        <input ng-model="walkInLocation" autokomplete type="text" name="wlocation"  id="walklocation" placeholder="Walk In Location(interview)"  data-toggle="tooltip" data-placement="right" title="Walk In Location">  
+                                                               
+                                                    </div>                              
+
+                                                    <!--Apply Link-->
+                                                    <div class="smartWidget-Input" style="display: none" id="add-link">
+                                                        <input type="url" ng-model="jobModel.applyLink" ng-keyup="prefixHTTP()" name="link" placeholder="Apply Link" data-toggle="tooltip" data-placement="right" title="Apply Link">
+                                                    </div>
+
+                                                    <!--DateTime-->
+                                                    <div class="searchBx" style="display: none" id="add-date-time" data-toggle="tooltip" data-placement="right" title="Date&Time">
+
+                                                        <input kendo-date-time-picker style="width: 100%" placeholder="DateTime" ng-model="jobModel.dateTime"/>
+                                                       
+                                                    </div>
+
+                                                    <!--Phone-->
+                                                    <div class="smartWidget-Input" style="display: none" id="add-phone">
+                                                        <input type="text" ng-model="jobModel.phone" name="phone" placeholder="Add Phone"  data-toggle="tooltip" data-placement="right" title="Add Phone">
+                                                    </div> 
+
+                                                    <!--Job type-->
+                                                    <div class="smartWidget-Input" style="display: none" id="add-job-type">
+                                                        <select placeholder="job type"  ng-model="jobModel._jobType" data-toggle="tooltip" data-placement="right" title="Job type">
+
+                                                            <option ng-repeat="jtype in jobTypeList"  value="{{jtype}}">{{jtype.get("name")}}</option>    
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!--Interview type-->
+                                                    <div class="smartWidget-Input" style="display: none" id="add-interview-type">
+                                                        <select placeholder="interview type" ng-model="jobModel._interviewType"  data-toggle="tooltip" data-placement="right" title="Interview type">
+
+                                                            <option ng-repeat="itype in interviewTypeList"  value="{{itype}}">{{itype.get("name")}}</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!--optional widget-->
+                                                    <div class="optional-widget cf">
+                                                        <div class="cf pull-left" style="width:81%;word-break: break-all; height:40px;">
+                                                            <div class="widgetPadding cf">
+                                                                <!--Logo-->
+                                                                <div class="pull-left firstOptn">
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Logo" ng-click="selectLogo()">
+                                                                        <i class="fa fa-camera fa-lg post-opt-icons"></i>
+                                                                    </a>
+                                                                </div> 
+
+                                                                <!--Walk In Location-->
+                                                                <div class="pull-left optionalBtnz">
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Walk In location"
+                                                                       ng-click="toggle('add-walkin')">
+                                                                        <i class="fa fa-map-marker fa-lg post-opt-icons"></i>
+                                                                    </a>
+                                                                </div>                                           
+                                                             
+                                                                <!--Apply Link-->
+                                                                <div class="pull-left optionalBtnz">
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Apply Link"
+                                                                       ng-click="toggle('add-link')">
+                                                                        <i class="fa fa-link fa-lg post-opt-icons"></i>
+                                                                    </a>
+                                                                </div>
+                                                                
+                                                                <!--DateTime-->
+                                                                <div class="pull-left optionalBtnz">
+                                                                    <a data-toggle="tooltip" data-placement="top" title="DateTime"
+                                                                       ng-click="toggle('add-date-time')">
+                                                                        <i class="fa fa-clock-o fa-lg post-opt-icons"></i>
+                                                                    </a>
+                                                                </div>
+                                                           
+                                                                <!--Phone-->
+                                                                <div class="pull-left optionalBtnz">
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Add Phone"
+                                                                       ng-click="toggle('add-phone')">
+                                                                        <i class="fa fa-phone fa-lg post-opt-icons"></i>
+                                                                    </a>
+                                                                </div>
+                                                                                                  
+
+                                                                <!--Job Type-->
+                                                                <div class="pull-left optionalBtnz">
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Job type"
+                                                                       ng-click="toggle('add-job-type')">
+                                                                        <i class="fa fa-wrench fa-lg post-opt-icons"></i>
+                                                                    </a>
+                                                                </div>
+                                                                
+
+                                                                <!--Interview type-->
+                                                                <div class="pull-left optionalBtnz">
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Interview type"
+                                                                       ng-click="toggle('add-interview-type')">
+                                                                        <i class="fa fa-users fa-lg post-opt-icons"></i>
+                                                                    </a>
+                                                                </div>
+                                                                
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="cf pull-right" style=" width:66px;word-break: break-all; height:40px;">
+                                                            <div class="widgetPadding2">
+                                                                <center>
+                                                                    <button type="submit" ng-click="initPostJob()" class="postBtn">POST</button>
+                                                                </center>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <!--/optional widget-->
+                                                </div>
+                                                <!--/Open up form-->
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane sw-tablePanel-minheight" id="company">
+                                                <div>
+                                                    <!--Company Industry-->
+                                                    <div class="smartWidget-Input">
+                                                        <select ng-model="companyModel._industry" placeholder="Type of Industry" data-toggle="tooltip" data-placement="right" title="Type of Industry">
+
+                                                             <option ng-repeat="cIndustry in companyIndustryList"  value="{{cIndustry}}">{{cIndustry.get("name")}}</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <!--Company Website-->
+                                                    <div class="smartWidget-Input">
+                                                        <input type="text" ng-model="companyModel.url"  ng-keyup="prefixHTTP()" placeholder="Company website" data-toggle="tooltip" data-placement="right" title="Company website">
+                                                    </div>                               
+
+                                                    <!--Company About-->
+                                                    <div class="smartWidget-Input">
+                                                        <textarea msd-elastic ng-model="companyModel.about" placeholder="About Сompany"
+                                                                  class="abtCompanyTxtArea" data-toggle="tooltip" data-placement="right" title="About Сompany"></textarea>
+                                                    </div>
+
+                                                    <!--Dummy optional widget-->
+                                                    <div class="optional-widget cf">
+                                                    </div>
+                                                    <!--/Dummy optional widget-->
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                    </div>
+                                    <!--/table panel-->
+                                </div>
+                            </div>
+                            <!--/Smart Input Widget-->
+
+                            <div class="row content-div" style="margin-top:20px;">
+                                <div class="bg-color-white" style="width:100%;">
+                                    <table class="table table-hover">
+                                         <tr ng-repeat="eachJob in jobList | orderBy:'updatedAt':true">
+                                            <td>
+                                                <div class="joblist-paddingLR cf">
+                                                    <!--Job summary-->
+                                                    <div class="pull-left cf" style="width:95%;">
+                                                        <a href="#/details/{{eachJob.get('id')}}">
+                                                            <div class="pull-left">
+                                                                <div class="company-logo-class-wrapper">
+                                                                  <img src="{{eachJob.get('_company').get('logo').url}}" class="company-logo-class">
+                                                                </div>
+                                                            </div>
+                                                            <div class="pull-left" style="margin-left:10px;width:80%;">
+                                                                <div style="width:100%;">
+                                                                    <span class="fg-color-joblist" style="margin:0; padding:0; font-size:16px;">
+                                                                    {{eachJob.get("_company").get("name")}}</span>
+                                                                </div>
+                                                                <div style="width:100%; margin-top:-1.5px;">
+                                                                    <span class="" style="margin:0; padding:0; font-size:14px;color:black">
+                                                                    {{eachJob.get("title")}} 
+                                                                    <span style="color:black">
+                                                                        @ {{eachJob.get("companyLocationDetails").address}}
+                                                                    </span></span>
+                                                                </div>  
+                                                                
+                                                                <div style="width:100%;margin-top:-1.5px;">
+                                                                    <span class="fg-color-softgray" style="margin:0; padding:0; font-size:14px;" data-livestamp="{{eachJob.get('updatedAt')}}">
+                                                                    d</span>
+                                                                </div>                                  
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <!--/Job summary-->
+
+                                                    <!--Drop down menu-->
+                                                    <div class="pull-right mdfyDrpdwn-div"> 
+                                                        <a class="modifybtn" ng-click="modifyJobOptions[$index]=!modifyJobOptions[$index]">
+                                                          <i class="fa fa-angle-down fg-color-softgray"></i>
+                                                        </a>
+                                                        <div ng-show="modifyJobOptions[$index]" class="modify-job-opts effect1">
+                                                            <ul>
+                                                                <li ng-click="editJob($index)">
+                                                                    <a>Edit</a>
+                                                                </li>
+                                                                <li ng-click="deleteJob($index)">
+                                                                    <a>Delete</a>
+                                                                </li>                                
+                                                            </ul>
+                                                        </div>
+                                                   </div>
+                                                    <!--/Drop down menu-->
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!--STatic
+                                        <tr>
+                                            <td>
+                                                <div class="joblist-paddingLR cf">
+                                                    <!--Job summary
+                                                    <div class="pull-left cf" style="width:95%;">
+                                                        <a href="#/details/2334344">
+                                                            <div class="pull-left">
+                                                                <img src="assets/images/star.gif" style="width:50px; height:50px;">
+                                                            </div>
+                                                            <div class="pull-left" style="margin-left:10px;width:80%;">
+                                                                <div style="width:100%;">
+                                                                    <span class="fg-color-joblist" style="margin:0; padding:0; font-size:16px;">
+                                                                    Starbucks</span>
+                                                                </div>
+                                                                <div style="width:100%; margin-top:-1.5px;">
+                                                                    <span class="" style="margin:0; padding:0; font-size:14px;color:black">
+                                                                    Hacker <span style="color:black">@ San fransico,NY</span></span>
+                                                                </div>  
+                                                                
+                                                                <div style="width:100%;margin-top:-1.5px;">
+                                                                    <span class="fg-color-softgray" style="margin:0; padding:0; font-size:14px;">
+                                                                    3 Days ago</span>
+                                                                </div>                                  
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <!--/Job summary-->
+
+                                                    <!--Drop down menu
+                                                    <div class="pull-right mdfyDrpdwn-div"> 
+                                                        <a class="modifybtn" ng-click="modifyJobOptions[0]=!modifyJobOptions[0]">
+                                                          <i class="fa fa-angle-down fg-color-softgray"></i>
+                                                        </a>
+                                                        <div ng-show="modifyJobOptions[0]" class="modify-job-opts effect1">
+                                                            <ul>
+                                                                <li ng-click="editJob()">
+                                                                    <a>Edit</a>
+                                                                </li>
+                                                                <li ng-click="deleteJob()">
+                                                                    <a>Delete</a>
+                                                                </li>                                
+                                                            </ul>
+                                                        </div>
+                                                   </div>
+                                                    <!--/Drop down menu
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                               
+                                                <div class="joblist-paddingLR cf">
+                                                    <!--Job summary
+                                                    <div class="pull-left cf" style="width:95%;">
+                                                        <a href="#/details/2334344">
+                                                            <div class="pull-left">
+                                                                <img src="assets/images/kfc.png" style="width:50px; height:50px;">
+                                                            </div>
+                                                            <div class="pull-left" style="margin-left:10px;width:80%;">
+                                                                <div style="width:100%;">
+                                                                    <span class="fg-color-joblist" style="margin:0; padding:0; font-size:16px;">
+                                                                    KFC</span>
+                                                                </div>
+                                                                <div style="width:100%; margin-top:-1.5px;">
+                                                                    <span class="" style="margin:0; padding:0; font-size:14px;color:black">
+                                                                    Evangelist <span style="color:black">@ Hyderabad,Andhra pradesh</span></span>
+                                                                </div>  
+                                                                
+                                                                <div style="width:100%;margin-top:-1.5px;">
+                                                                    <span class="fg-color-softgray" style="margin:0; padding:0; font-size:14px;">
+                                                                    13,Friday</span>
+                                                                </div>                                  
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <!--/Job summary-->
+
+                                                    <!--Drop down menu
+                                                    <div class="pull-right mdfyDrpdwn-div"> 
+                                                        <a class="modifybtn" ng-click="modifyJobOptions[1]=!modifyJobOptions[1]">
+                                                          <i class="fa fa-angle-down fg-color-softgray"></i>
+                                                        </a>
+                                                        <div ng-show="modifyJobOptions[1]" class="modify-job-opts effect1">
+                                                            <ul>
+                                                                <li>
+                                                                    <a>Edit Info</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Edit Info</a>
+                                                                </li>                                
+                                                            </ul>
+                                                        </div>
+                                                   </div>
+                                                    <!--/Drop down menu
+                                                    
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="joblist-paddingLR cf">
+                                                    <!--Job summary
+                                                    <div class="pull-left cf" style="width:95%;">
+                                                        <a href="#/details/2334344">
+                                                            <div class="pull-left">
+                                                                <img src="assets/images/what.png" style="width:50px; height:50px;">
+                                                            </div>
+                                                            <div class="pull-left" style="margin-left:10px;width:80%;">
+                                                                <div style="width:100%;">
+                                                                    <span class="fg-color-joblist" style="margin:0; padding:0; font-size:16px;">
+                                                                    whatsapp</span>
+                                                                </div>
+                                                                <div style="width:100%; margin-top:-1.5px;">
+                                                                    <span class="" style="margin:0; padding:0; font-size:14px;color:black">
+                                                                    Data Scientist <span style="color:black">@ Chicago,IL</span></span>
+                                                                </div>  
+                                                                
+                                                                <div style="width:100%;margin-top:-1.5px;">
+                                                                    <span class="fg-color-softgray" style="margin:0; padding:0; font-size:14px;">
+                                                                    5 Days ago</span>
+                                                                </div>                                  
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <!--/Job summary-->
+
+                                                    <!--Drop down menu
+                                                    <div class="pull-right mdfyDrpdwn-div"> 
+                                                        <a class="modifybtn" ng-click="modifyJobOptions[2]=!modifyJobOptions[2]">
+                                                          <i class="fa fa-angle-down fg-color-softgray"></i>
+                                                        </a>
+                                                        <div ng-show="modifyJobOptions[2]" class="modify-job-opts effect1">
+                                                            <ul>
+                                                                <li>
+                                                                    <a>Edit Info</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>Edit Info</a>
+                                                                </li>                                
+                                                            </ul>
+                                                        </div>
+                                                   </div>
+                                                    <!--/Drop down menu
+                                                    
+                                                </div>
+                                                
+                                            </td>
+                                        </tr>-->
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Extra feed column-->
+                        <div class="col-md-4 col-xs-12 extra-feed" ng-include="'app/views/joblist/extrafeed.html'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!--Enter Phone Modal-->
+<div class="modal fade" id="enterPhone">
+  <div class="modal-dialog">
+    <div class="modal-content mcontent-custom">
+      <div >
+        <button type="button" class="close" ng-click="cancelPost()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="flex-general-row-wrapper-center">
+            <h4 class="modal-title">Authentication</h4>
+        </div>
+      </div>
+      <div class="modal-body">
+         
+
+        <div class="modal-actual-content flex-general-row-wrapper-center"> 
+            <!--If User doesn't-->               
+            <div ng-if="(!userObj || !userObj.get('phone')) || !continueExistUser">
+
+              <!--Phone number form-->
+              <div ng-show="!isOTPSent" class="form-group auth-form">
+                <div class="flex-general-row-wrapper-center">
+                    <label for="recipient-name" class="control-label">Enter your mobile number</label>
+                </div>
+
+                <div class="flex-siblings-wrapper">
+                    <div class="">                        
+                    <input  intlphone type="tel" id="mobile-number" class="form-control modalInput">  
+                    </div> 
+
+                     <div class="" style="margin-left:2px;">
+                         <button type="button" ng-click="sendOTP()" class=" btn-primary modalBtn">Send Code</button>
+                    </div>                       
+                </div>  
+
+              </div>
+
+              <!--OTP number form-->
+              <div ng-show="isOTPSent" class="form-group auth-form">
+                <div class="flex-general-row-wrapper-center">                 
+                  <p style="font-size:12px;color:black;">We have successfully sent OTP to your mobile, Enter OTP below <span class="anchor-link" ng-click="resend()">(Re-send)</span></p>
+                  
+                </div>
+                
+                <div class="flex-siblings-wrapper">
+                    <div class="">
+                        <input type="text" ng-model="userModel.otpCode" class="form-control modalInput" id="recipient-name"> 
+                    </div> 
+                    <div class="" style="margin-left:2px;">
+                         <button type="button" ng-click="verifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+                    </div>                       
+                </div>
+                <p style="color:red;">{{invalidOTPError}}</p>                               
+              </div>
+            </div>
+            <!--/If User doesn't--> 
+
+            <!--If User-->
+            <div ng-if="userObj && userObj.get('phone') && continueExistUser" class="form-group">
+                <div class="flex-general-column-wrapper-center">
+                    <div>
+                        <a href="" ng-click="continueWithPhone()">Continue with this phone:</a>
+                        <span>{{userObj.get('phone')}}</span>
+                    </div>
+                    
+                    <div>OR</div>
+                    
+                    <div>
+                        <a href="" ng-click="changePhone()">Change phone and send OTP</a>
+                    </div>
+                </div>
+            </div> 
+            <!--/If User-->
+
+        
+        </div>
+
+
+      </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--/Enter Phone Modal-->
+
+
+<!--Delete Job Phone Modal-->
+<div class="modal fade" id="deleteJob">
+  <div class="modal-dialog">
+    <div class="modal-content mcontent-custom">
+      <div >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="flex-general-row-wrapper-center">
+            <h4 class="modal-title">Delete Job Authentication</h4>
+        </div>
+      </div>
+      <div class="modal-body">
+         
+
+        <div class="modal-actual-content flex-general-row-wrapper-center">                
+            
+              <!--Phone number form-->
+              <div ng-show="!isOTPSentForDel" class="form-group auth-form">
+                <div class="flex-general-row-wrapper-center">
+                    <label for="recipient-name" class="control-label">Enter your mobile number</label>
+                    &nbsp;<span style="font-size:12px;">(Person who added this job can only delete)</span>
+                </div>
+
+                <div class="flex-general-row-wrapper-center">
+                <div class="flex-siblings-wrapper">
+                    <div class="">                        
+                     <input  intlphone type="tel" id="del-mobile-number" class="form-control modalInput2">  
+                    </div> 
+
+                     <div class="" style="margin-left:2px;">
+                         <button type="button" ng-click="deleteSendOTP()" class=" btn-primary modalBtn2">Send Code</button>
+                    </div>                       
+                </div>
+                </div>                
+
+              </div>
+
+              <!--OTP number form-->
+              <div ng-show="isOTPSentForDel" class="form-group auth-form">
+                <div class="flex-general-row-wrapper-center">                 
+                  <p style="font-size:12px;color:black;">We have successfully sent OTP to your mobile, Enter OTP below <span class="anchor-link">(Re-send)</span></p>
+                  
+                </div>
+                
+                <div class="flex-siblings-wrapper">
+                    <div class="">
+                        <input type="text" ng-model="userOTP" class="form-control modalInput" id="recipient-name"> 
+                    </div> 
+                    <div class="" style="margin-left:2px;">
+                         <button type="button" ng-click="deleteVerifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+                    </div>                       
+                </div>
+                <p>{{invalidOTPError}}</p>                               
+              </div>
+
+        
+        </div>
+
+
+      </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--/Delete Job Phone Modal-->
+
+
+<!--Edit Job Modal-->
+<div class="modal fade" id="editJob">
+  <div class="modal-dialog">
+    <div class="modal-content mcontent-custom">
+      <div>
+        <button type="button" class="close" ng-click="cancelEdit()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="flex-general-row-wrapper-center">
+            <h4 class="modal-title">Edit Job</h4>
+        </div>
+      </div>
+      <div class="modal-body">        
+
+        <div class="modal-actual-content">                
+            
+              <div id="app-full-form" role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#editjob" ng-click="setCategory($event, 'editjob');"
+                               aria-controls="home" role="tab" data-toggle="tab">Job</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#editcompany" ng-click="setCategory($event, 'editcompany')"
+                               aria-controls="profile" role="tab" data-toggle="tab">Company</a>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active sw-tablePanel-minheight" id="editjob">
+                            <!--Open up form-->
+                            <div>
+                                <!--CompanyName-->
+                                <div class="smartWidget-Input">
+                                    <input type="text" ng-model="editCompanyModel.name" placeholder="Company Name" data-toggle="tooltip" data-placement="right" title="Company Name">
+                                </div>
+                                <!--Job Title-->
+                                <div class="smartWidget-Input">
+                                    <input type="text" ng-model="editJobModel.title" name="title" placeholder="Job Title" data-toggle="tooltip" data-placement="right" title="Job Title">
+                                </div>
+                                <!--Job Description-->
+                                <div class="smartWidget-Input">
+                                    <textarea msd-elastic ng-model="editJobModel.description" data-toggle="tooltip" data-placement="right" title="Describe this job"
+                                              placeholder="Describe this job, education,skills"></textarea>
+                                </div>         
+                                <!--Experience required-->                      
+                                <div class="smartWidget-Input" >                                  
+                                    <input type="text" ng-model="editJobModel.experience" name="experience" placeholder="Experience" data-toggle="tooltip" data-placement="right" title="Experience">
+                                </div>
+
+                                <!--Resume to(Email)-->
+                                <div class="smartWidget-Input">
+                                    <input type="text" ng-model="editJobModel.resumeTo" name="mail" placeholder="ResumeTo(email)" data-toggle="tooltip" data-placement="right" title="ResumeTo(email)" >
+                                </div>
+
+                                <!--Company Location-->
+                                <div class="smartWidget-Input">
+                                   
+                                    <input ng-model="editCompanyLocation" g-places-autocomplete type="text" name="eclocation"  id="editcomlocation" placeholder="Company Location"  data-toggle="tooltip" data-placement="right" title="Company Location">  
+                                           
+                                </div>
+
+                                <!--Optional Fields-->
+
+                                <!--Logo-->
+                                <div  style="display:none" id="edit-logo" class="edit-logo-bx">
+
+                                    <!--Hidden File Input selector-->
+                                    <div>
+                                        <input type="file" id="edit-logo-input" style="display:none"/>
+                                    </div>
+
+                                    <!--Image Display-->                                   
+                                    <div class="cropArea" style="display: none;">
+                                        <img-crop image="editCompanyLogo" area-type="square" result-image="editCroppedCompanyLogo"></img-crop>
+                                    </div>
+
+                                    <div style="position: relative">
+                                        <img id="selected-logo" class="croppedCompanyLogo" ng-src="{{editCroppedCompanyLogo}}"/>
+                                        <div class="croppedImgCloseBtn" ng-click="clearCompanyLogo()">X</div>
+                                    </div>
+                                </div> 
+
+                                 <!--Walk in Location-->
+                                <div class="smartWidget-Input" style="display: none" id="edit-walkin">
+                                   
+                                    <input ng-model="editWalkInLocation" g-places-autocomplete type="text" name="ewlocation"  id="edit-walklocation" placeholder="Walk In Location(interview)"  data-toggle="tooltip" data-placement="right" title="Walk In Location">  
+                                           
+                                </div>                              
+
+                                <!--Apply Link-->
+                                <div class="smartWidget-Input" style="display: none" id="edit-link">
+                                    <input type="url" ng-model="editJobModel.applyLink" ng-keyup="prefixHTTP()" name="link" placeholder="Apply Link" data-toggle="tooltip" data-placement="right" title="Apply Link">
+                                </div>
+
+                                <!--DateTime-->
+                                <div class="searchBx" style="display: none" id="edit-date-time" data-toggle="tooltip" data-placement="right" title="Date&Time">
+
+                                    <input kendo-date-time-picker style="width: 100%" placeholder="DateTime" ng-model="editJobModel.dateTime"/>
+                                   
+                                </div>
+
+                                <!--Phone-->
+                                <div class="smartWidget-Input" style="display: none" id="edit-phone">
+                                    <input type="text" ng-model="editJobModel.phone" name="phone" placeholder="Add Phone"  data-toggle="tooltip" data-placement="right" title="Add Phone">
+                                </div> 
+
+                                <!--Job type-->
+                                <div class="smartWidget-Input" style="display: none" id="edit-job-type">
+                                    <select placeholder="job type"  ng-model="editJobModel._jobType" data-toggle="tooltip" data-placement="right" title="Job type">
+
+                                        <option ng-repeat="jtype in jobTypeList"  value="{{jtype}}">{{jtype.get("name")}}</option>    
+
+                                    </select>
+                                </div>
+
+                                <!--Interview type-->
+                                <div class="smartWidget-Input" style="display: none" id="edit-interview-type">
+                                    <select placeholder="interview type" ng-model="editJobModel._interviewType"  data-toggle="tooltip" data-placement="right" title="Interview type">
+
+                                        <option ng-repeat="itype in interviewTypeList"  value="{{itype}}">{{itype.get("name")}}</option>
+
+                                    </select>
+                                </div>
+
+                                <!--optional widget-->
+                                <div class="optional-widget cf">
+                                    <div class="cf pull-left" style="width:81%;word-break: break-all; height:40px;">
+                                        <div class="widgetPadding cf">
+                                            <!--Logo-->
+                                            <div class="pull-left firstOptn">
+                                                <a data-toggle="tooltip" data-placement="top" title="Logo" ng-click="selectLogo()">
+                                                    <i class="fa fa-camera fa-lg post-opt-icons"></i>
+                                                </a>
+                                            </div> 
+
+                                            <!--Walk In Location-->
+                                            <div class="pull-left optionalBtnz">
+                                                <a data-toggle="tooltip" data-placement="top" title="Walk In location"
+                                                   ng-click="toggle('edit-walkin')">
+                                                    <i class="fa fa-map-marker fa-lg post-opt-icons"></i>
+                                                </a>
+                                            </div>                                           
+                                         
+                                            <!--Apply Link-->
+                                            <div class="pull-left optionalBtnz">
+                                                <a data-toggle="tooltip" data-placement="top" title="Apply Link"
+                                                   ng-click="toggle('edit-link')">
+                                                    <i class="fa fa-link fa-lg post-opt-icons"></i>
+                                                </a>
+                                            </div>
+                                            
+                                            <!--DateTime-->
+                                            <div class="pull-left optionalBtnz">
+                                                <a data-toggle="tooltip" data-placement="top" title="DateTime"
+                                                   ng-click="toggle('edit-date-time')">
+                                                    <i class="fa fa-clock-o fa-lg post-opt-icons"></i>
+                                                </a>
+                                            </div>
+                                       
+                                            <!--Phone-->
+                                            <div class="pull-left optionalBtnz">
+                                                <a data-toggle="tooltip" data-placement="top" title="Add Phone"
+                                                   ng-click="toggle('edit-phone')">
+                                                    <i class="fa fa-phone fa-lg post-opt-icons"></i>
+                                                </a>
+                                            </div>
+                                                                              
+
+                                            <!--Job Type-->
+                                            <div class="pull-left optionalBtnz">
+                                                <a data-toggle="tooltip" data-placement="top" title="Job type"
+                                                   ng-click="toggle('edit-job-type')">
+                                                    <i class="fa fa-wrench fa-lg post-opt-icons"></i>
+                                                </a>
+                                            </div>
+                                            
+
+                                            <!--Interview type-->
+                                            <div class="pull-left optionalBtnz">
+                                                <a data-toggle="tooltip" data-placement="top" title="Interview type"
+                                                   ng-click="toggle('edit-interview-type')">
+                                                    <i class="fa fa-users fa-lg post-opt-icons"></i>
+                                                </a>
+                                            </div>
+                                            
+
+                                        </div>
+                                    </div>
+                                    <div class="cf pull-right" style=" width:66px;word-break: break-all; height:40px;">
+                                        <div class="widgetPadding2">
+                                            <center>
+                                                <button type="submit" ng-click="initEditJob()" class="postBtn">SAVE</button>
+                                            </center>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--/optional widget-->
+                            </div>
+                            <!--/Open up form-->
+                        </div>
+                        <div role="tabpanel" class="tab-pane sw-tablePanel-minheight" id="editcompany">
+                            <div>
+                                <!--Company Industry-->
+                                <div class="smartWidget-Input">
+                                    <select ng-model="editCompanyModel.industry" placeholder="Type of Industry" data-toggle="tooltip" data-placement="right" title="Type of Industry">
+
+                                         <option ng-repeat="cIndustry in companyIndustryList"  value="{{cIndustry}}">{{cIndustry.get("name")}}</option>
+
+                                    </select>
+                                </div>
+
+                                <!--Company Website-->
+                                <div class="smartWidget-Input">
+                                    <input type="text" ng-model="editCompanyModel.url"  ng-keyup="prefixHTTP()" placeholder="Company website" data-toggle="tooltip" data-placement="right" title="Company website">
+                                </div>                               
+
+                                <!--Company About-->
+                                <div class="smartWidget-Input">
+                                    <textarea msd-elastic ng-model="editCompanyModel.about" placeholder="About Сompany"
+                                              class="abtCompanyTxtArea" data-toggle="tooltip" data-placement="right" title="About Сompany"></textarea>
+                                </div>
+
+                                <!--Dummy optional widget-->
+                                <div class="optional-widget cf">
+                                </div>
+                                <!--/Dummy optional widget-->
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+                <!--/table panel-->
+        
+        </div>
+
+      </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--/Edit Job Modal-->
+
+
+<!--Edit Job Phone Modal-->
+<div class="modal fade" id="editJobAuth">
+  <div class="modal-dialog">
+    <div class="modal-content mcontent-custom">
+      <div >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="flex-general-row-wrapper-center">
+            <h4 class="modal-title">Edit Job Authentication</h4>
+        </div>
+      </div>
+      <div class="modal-body">
+         
+
+        <div class="modal-actual-content flex-general-row-wrapper-center">                
+            
+              <!--Phone number form-->
+              <div ng-show="!isOTPSentForEdit" class="form-group auth-form">
+                <div class="flex-general-row-wrapper-center">
+                    <label for="recipient-name" class="control-label">Enter your mobile number</label>
+                    &nbsp;<span style="font-size:12px;">(Person who added this job can only edit)</span>
+                </div>
+
+                <div class="flex-general-row-wrapper-center">
+                <div class="flex-siblings-wrapper">
+                    <div class="">                        
+                     <input  intlphone type="tel" id="edit-mobile-number" class="form-control modalInput2">  
+                    </div> 
+
+                     <div class="" style="margin-left:2px;">
+                         <button type="button" ng-click="editSendOTP()" class=" btn-primary modalBtn2">Send Code</button>
+                    </div>                       
+                </div>
+                </div>                
+
+              </div>
+
+              <!--OTP number form-->
+              <div ng-show="isOTPSentForEdit" class="form-group auth-form">
+                <div class="flex-general-row-wrapper-center">                 
+                  <p style="font-size:12px;color:black;">We have successfully sent OTP to your mobile, Enter OTP below <span class="anchor-link">(Re-send)</span></p>
+                  
+                </div>
+                
+                <div class="flex-siblings-wrapper">
+                    <div class="">
+                        <input type="text" ng-model="userOTP" class="form-control modalInput" id="recipient-name"> 
+                    </div> 
+                    <div class="" style="margin-left:2px;">
+                         <button type="button" ng-click="editVerifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+                    </div>                       
+                </div>
+                <p>{{invalidOTPError}}</p>                               
+              </div>
+
+        
+        </div>
+
+
+      </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--/Edit Job Phone Modal-->
+
+

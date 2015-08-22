@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bullgrunt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bullgrunt</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/kendo.common.min.css" rel="stylesheet">
+    <link href="assets/css/kendo.default.min.css" rel="stylesheet">
+    <link href="assets/css/ng-img-crop.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/src/autocomplete.css">-->
+    <link href="bower_components/intl-tel-input/build/css/intlTelInput.css" rel="stylesheet"/>
+    <link href="assets/js/AmaranJS/dist/css/amaran.min.css" rel="stylesheet"/>         
+    <link href="assets/css/app.css" rel="stylesheet">    
+
+    <!--Cloudboost.io-->
+    <script type="text/javascript" src="https://cloudboost.io/js-sdk/1.0.78.js"></script>
+
+</head>
+
+<body class="bg-color-lightgray" ng-controller="indexController" ng-init="init()">
+<header ng-include="'app/views/common/header.html'">
+</header>
+
+<!--Main content-->                    
+<ui-view></ui-view>
+               
+
+<!--<footer ng-include="'app/views/common/footer.html'">
+</footer>-->
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+<!--Custom-->
+<script src="assets/js/kendo.all.min.js"></script>
+<script src="assets/js/ui-bootstrap-custom-0.12.1.min.js"></script>
+<script src="assets/js/ui-bootstrap-custom-tpls-0.12.1.min.js"></script>
+<script src="assets/js/ng-img-crop.js"></script>
+<script src="bower_components/angular-elastic/elastic.js"></script>
+<script src="bower_components/typed.js/dist/typed.min.js"></script>
+<script src="bower_components/underscore/underscore-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/messenger/1.4.0/js/messenger.min.js"></script>
+<script src="bower_components/messenger/build/js/messenger-theme-flat.js"></script> 
+<script src="bower_components/intl-tel-input/lib/libphonenumber/build/utils.js"></script> 
+<script src="bower_components/intl-tel-input/build/js/intlTelInput.min.js"></script>  
+<script type="text/javascript" src="assets/js/AmaranJS/dist/js/jquery.amaran.min.js"></script>
+<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="assets/js/livestamp.js"></script>
+<script src='bower_components/lodash/lodash.min.js'></script>
+<script src='bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js'></script>
+<script src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
+<script src='assets/js/lrInfiniteScroll/lrInfiniteScroll.js'></script>
+
+<!--Google Maps-->
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+<script src="bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
+
+<!--Angular Main-->
+<script type="text/javascript" src="app/config/app.js"></script>
+<script type="text/javascript" src="app/config/route.js"></script>
+
+<!--Static Data Services-->
+<script src="app/staticDataServices/staticDataServices.js"></script>
+
+<!--ValidationServices-->
+<script src="app/validationServices/validationServices.js"></script>
+
+<!--Services-->
+<script src="app/services/locationServices.js"></script>
+<script src="app/services/jobTypeServices.js"></script>
+<script src="app/services/interviewTypeServices.js"></script>
+<script src="app/services/companyIndustryServices.js"></script>
+<script src="app/services/userServices.js"></script>
+<script src="app/services/companyServices.js"></script>
+<script src="app/services/jobServices.js"></script>
+
+<!--ModelTemplates-->
+<script src="app/modelTemplates/userModel.js"></script>
+<script src="app/modelTemplates/companyModel.js"></script>
+<script src="app/modelTemplates/jobModel.js"></script>
+
+<!--Controllers-->
+<script src="app/controllers/indexController.js"></script>
+<script src="app/controllers/jobListController.js"></script>
+<script src="app/controllers/jobDetailsController.js"></script>
+
+<!--Services-->
+<script src="app/services/locationServices.js"></script>
+<script src="app/services/jobTypeServices.js"></script>
+<script src="app/services/interviewTypeServices.js"></script>
+<script src="app/services/companyIndustryServices.js"></script>
+<script src="app/services/userServices.js"></script>
+<script src="app/services/companyServices.js"></script>
+<script src="app/services/jobServices.js"></script>
+
+<!--Directives-->
+<script type="text/javascript" src="app/directives/commonDirectives.js"></script>
+
+</body> 
+</html>
