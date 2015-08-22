@@ -19,7 +19,7 @@ var serverURL = null;
 if(__isDevelopment){
     serverURL="http://localhost:1444";   
 }else{
-    //serverURL = "https://service.cloudboost.io";    
+    serverURL="http://bgbackend.herokuapp.com"; 
 }
 
 
