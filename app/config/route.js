@@ -2,7 +2,7 @@ app.config(
 function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) {
     $stateProvider.state('joblist',
     {
-        url: '',
+        url: '/',
         templateUrl: 'app/views/joblist/joblist.html',
         controller: 'jobListController'
     });
@@ -13,6 +13,8 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
         templateUrl: 'app/views/jobdetails.html',
         controller: 'jobDetailsController'
     });
+
+    $urlRouterProvider.otherwise('/');
 
     //cors.
     $httpProvider.defaults.useXDomain = true;
