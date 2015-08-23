@@ -624,7 +624,7 @@ function ($scope,
         }, 0);
     });*/
 
-    $(document).click(function (e){
+    /*$(document).click(function (e){
         var container = $("#app-full-form");
         var postJobModal=$("#enterPhone");
         var autoLocation=$(".autolist");
@@ -643,11 +643,11 @@ function ($scope,
             $scope.openFullForm = false;
             $scope.$digest();
         } 
-    });
+    });*/
 
     $('#app-full-form').on('click', function (event) {
         event.stopPropagation();
-    });    
+    });
 
     function tooltip() {
         $('[data-toggle="tooltip"]').tooltip();

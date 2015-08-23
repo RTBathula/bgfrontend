@@ -72,7 +72,7 @@ angular.module('google.places', [])
 
                     function initAutocompleteDrawer() {
                         // Drawer element used to display predictions
-                        var drawerElement = angular.element('<div g-places-autocomplete-drawer class="autolist pac-container"></div>'),
+                        var drawerElement = angular.element('<div class="autolist" g-places-autocomplete-drawer></div>'),
                             body = angular.element($document[0].body),
                             $drawer;
 
