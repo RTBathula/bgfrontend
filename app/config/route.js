@@ -1,5 +1,7 @@
 app.config(
 function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) {
+    
+    $urlRouterProvider.otherwise('/');
     $stateProvider.state('joblist',
     {
         url: '/',
@@ -14,7 +16,8 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
         controller: 'jobDetailsController'
     });
 
-    $urlRouterProvider.otherwise('/');
+    $locationProvider.hashPrefix('!');
+    $locationProvider.html5Mode(true);   
 
     //cors.
     $httpProvider.defaults.useXDomain = true;
