@@ -624,6 +624,23 @@ function ($scope,
         }, 0);
     });*/
 
+    $(document).click(function (e){
+        var container = $("#app-full-form");
+        var postJobModal=$("#enterPhone");
+        var location=$(".autokmplt-plug");
+
+        var sameContainer=container.is(e.target) // if the target of the click isn't the container...
+        var childContainer=container.has(e.target).length === 0;
+        var samePostJobModal=postJobModal.is(e.target);
+        var childPostJobModal=postJobModal.has(e.target).length === 0;
+       
+
+        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && !location){
+            $scope.openFullForm = false;
+            $scope.$digest();
+        }
+    });
+
     $('#app-full-form').on('click', function (event) {
         event.stopPropagation();
     });
