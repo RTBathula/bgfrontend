@@ -19,6 +19,9 @@ function ($scope,
     $scope.companyLogo = '';    
     $scope.croppedCompanyLogo = '';
     $scope.modifyJobOptions=[];
+    $scope.jobTypeList=[];
+    $scope.companyIndustryList=[];
+    $scope.interviewTypeList=[];
     $scope.isOTPSent=false;   
    
     $scope.autocompleteOptions = {       

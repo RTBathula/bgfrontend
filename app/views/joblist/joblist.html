@@ -259,7 +259,9 @@
                                                         <a href="#/details/{{eachJob.get('id')}}">
                                                             <div class="pull-left">
                                                                 <div class="company-logo-class-wrapper">
-                                                                  <img src="{{eachJob.get('_company').get('logo').url}}" class="company-logo-class">
+                                                                  <img ng-if="eachJob.get('_company').get('logo').url" src="{{eachJob.get('_company').get('logo').url}}" class="company-logo-class">
+
+                                                                  <img ng-if="!eachJob.get('_company').get('logo').url" src="assets/images/default.png" class="company-logo-class">
                                                                 </div>
                                                             </div>
                                                             <div class="pull-left" style="margin-left:10px;width:80%;">
