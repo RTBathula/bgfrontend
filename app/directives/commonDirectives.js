@@ -88,9 +88,11 @@ app.directive('autokomplete', function() {
             };
             autocomplete  = new google.maps.places.Autocomplete(element[0], options);
 
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
-                scope.$apply(function() {
-                    model.$setViewValue(element.val());                
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {              
+                scope.$apply(function() { 
+                    var place = autocomplete.getPlace();
+                    console.log(place); 
+                    model.$setViewValue(place);
                 });
             });
         }

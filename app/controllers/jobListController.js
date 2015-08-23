@@ -627,23 +627,27 @@ function ($scope,
     $(document).click(function (e){
         var container = $("#app-full-form");
         var postJobModal=$("#enterPhone");
-        var location=$(".autokmplt-plug");
+        var autoLocation=$(".autolist");
+        var autoLocation2=$(".pac-container");        
 
         var sameContainer=container.is(e.target) // if the target of the click isn't the container...
         var childContainer=container.has(e.target).length === 0;
         var samePostJobModal=postJobModal.is(e.target);
         var childPostJobModal=postJobModal.has(e.target).length === 0;
-       
+        var sameAutoLocation=autoLocation.is(e.target);
+        var childAutoLocation=autoLocation.has(e.target).length === 0;
+        var sameAutoLocation2=autoLocation2.is(e.target);   
+        var childAutoLocation2=autoLocation.has(e.target).length === 0;     
 
-        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && !location){
+        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && !sameAutoLocation && childAutoLocation && !sameAutoLocation2 && childAutoLocation2){
             $scope.openFullForm = false;
             $scope.$digest();
-        }
+        } 
     });
 
     $('#app-full-form').on('click', function (event) {
         event.stopPropagation();
-    });
+    });    
 
     function tooltip() {
         $('[data-toggle="tooltip"]').tooltip();

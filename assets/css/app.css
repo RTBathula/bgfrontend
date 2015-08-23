@@ -718,7 +718,7 @@
 .angular-google-map-container { 
 	height: 200px; 
 }
-.pac-container {
+.pac-container {  
   z-index: 1040 !important;
 }
 .search-list-ul{
@@ -745,7 +745,7 @@
 }
 
 .joblist-page{	
-	height:83.4vh;
+	height:83.9vh;
 	overflow: auto;
 	padding-top: 20px;
 }
