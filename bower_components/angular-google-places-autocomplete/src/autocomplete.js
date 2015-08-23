@@ -82,7 +82,7 @@ angular.module('google.places', [])
                             predictions: 'predictions',
                             active: 'active',
                             selected: 'selected'
-                        });
+                        });                                              
 
                         $drawer = $compile(drawerElement)($scope);
                         body.append($drawer);  // Append to DOM

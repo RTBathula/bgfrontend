@@ -624,26 +624,27 @@ function ($scope,
         }, 0);
     });*/
 
-    /*$(document).click(function (e){
+    $(document).click(function (e){
         var container = $("#app-full-form");
         var postJobModal=$("#enterPhone");
-        var autoLocation=$(".autolist");
-        var autoLocation2=$(".pac-container");        
+        //var autoLocation=$(".ng-binding");
+        //var autoLocation2=$(".pac-item-query"); 
+        var mapElmt=$(e.target)[0].className;      
 
         var sameContainer=container.is(e.target) // if the target of the click isn't the container...
         var childContainer=container.has(e.target).length === 0;
         var samePostJobModal=postJobModal.is(e.target);
         var childPostJobModal=postJobModal.has(e.target).length === 0;
-        var sameAutoLocation=autoLocation.is(e.target);
-        var childAutoLocation=autoLocation.has(e.target).length === 0;
-        var sameAutoLocation2=autoLocation2.is(e.target);   
-        var childAutoLocation2=autoLocation.has(e.target).length === 0;     
+        //var sameAutoLocation=autoLocation.is(e.target);
+        //var childAutoLocation=autoLocation.has(e.target).length === 0;
+        //var sameAutoLocation2=autoLocation2.is(e.target);   
+        //var childAutoLocation2=autoLocation.has(e.target).length === 0;     
 
-        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && !sameAutoLocation && childAutoLocation && !sameAutoLocation2 && childAutoLocation2){
+        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope")){
             $scope.openFullForm = false;
             $scope.$digest();
         } 
-    });*/
+    });
 
     $('#app-full-form').on('click', function (event) {
         event.stopPropagation();
