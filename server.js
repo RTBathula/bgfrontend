@@ -10,8 +10,7 @@ var app = express();
 app.use(express.static(__dirname));
 
 //This will ensure that all routing is handed over to AngularJS 
-app.get('*', function(req, res){
-	console.log(__dirname);
+app.get('*', function(req, res){	
   res.sendFile(__dirname+'/index.html'); 
 });
 
