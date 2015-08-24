@@ -2,7 +2,7 @@
 <html lang="en" ng-app="bullgrunt">
 <head>
     <meta charset="utf-8">
-    <!--<base href="/">-->
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="fragment" content="!"/>
     <title>bullgrunt</title>
@@ -23,7 +23,7 @@
 
 </head>
 
-<body class="bg-color-lightgray" ng-controller="indexController" ng-init="init()">
+<body class="bg-color-lightgray">
 <header ng-include="'app/views/common/header.html'">
 </header>
 
@@ -92,7 +92,7 @@
 <script src="app/modelTemplates/jobModel.js"></script>
 
 <!--Controllers-->
-<script src="app/controllers/indexController.js"></script>
+<!--<script src="app/controllers/indexController.js"></script>-->
 <script src="app/controllers/jobListController.js"></script>
 <script src="app/controllers/jobDetailsController.js"></script>
 
