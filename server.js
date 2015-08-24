@@ -10,11 +10,11 @@ var app = express();
 app.use(express.static(__dirname));
 
 //This will ensure that all routing is handed over to AngularJS 
-/*app.get('*', function(req, res){
+app.get('*', function(req, res){
 	console.log(__dirname);
   res.sendFile(__dirname+'/index.html'); 
 });
-*/
+
 app.set('port', process.env.PORT || 1440);
 
 var server = app.listen(app.get('port'), function() {
