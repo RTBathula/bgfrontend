@@ -16,6 +16,12 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
         controller: 'jobDetailsController'
     });
 
+    $stateProvider.state('aboutus',
+    {
+        url: '/aboutus',
+        templateUrl: 'app/views/aboutUs.html'
+    });
+
     $locationProvider.hashPrefix('!');
     $locationProvider.html5Mode(true);   
 

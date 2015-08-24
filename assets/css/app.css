@@ -570,7 +570,7 @@
 
 .search-input:hover,.search-input:focus{
    background-color: transparent;
-    outline: 0;
+   outline: 0;
 }
 .default-vals-div{	
 	width:100%;
@@ -746,6 +746,16 @@
 
 .joblist-page{	
 	height:83.9vh;
+	overflow: auto;
+	padding-top: 20px;
+}
+.jobdetails-page{	
+	height:83.89vh;
+	overflow: auto;
+	padding-top: 20px;
+}
+.aboutus-page{
+	height:83.89vh;
 	overflow: auto;
 	padding-top: 20px;
 }
