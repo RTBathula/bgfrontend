@@ -4,7 +4,7 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
     $urlRouterProvider.otherwise('/');
     $stateProvider.state('joblist',
     {
-        url: '/',
+        url: '/jobs',
         templateUrl: 'app/views/joblist/joblist.html',
         controller: 'jobListController'
     });
@@ -12,7 +12,7 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
     $stateProvider.state('jobdetails',
     {
         url: '/details/:jobId',
-        templateUrl: 'app/views/jobdetails.html',
+        templateUrl: 'app/views/jobDetails.html',
         controller: 'jobDetailsController'
     });
 
