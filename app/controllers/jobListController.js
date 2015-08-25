@@ -632,9 +632,18 @@ function ($scope,
         var postJobModal=$("#enterPhone");
         var autoLocation=$(".autolist");
         //var autoLocation2=$(".pac-item-query"); 
-        var mapElmt=$(e.target)[0].className;  
-        var mapElmt2=$(e.target)[0].hasClass(".pac-container");
-        //e.target.parentElement.className    
+        var mapElmt=$(e.target)[0].className; 
+        var classNames=e.target.parentElement.className 
+        
+
+        //String.prototype.contains(searchString, startIndex);
+        if (!('contains' in String.prototype)) {
+          String.prototype.contains = function(str, startIndex) {
+            return ''.indexOf.call(this, str, startIndex) !== -1;
+          };
+        }  
+
+        var result=classNames.contains("pac-container"); // true
 
         var sameContainer=container.is(e.target) // if the target of the click isn't the container...
         var childContainer=container.has(e.target).length === 0;
@@ -645,7 +654,7 @@ function ($scope,
         //var sameAutoLocation2=autoLocation2.is(e.target);   
         //var childAutoLocation2=autoLocation.has(e.target).length === 0;     
 
-        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope") && !sameAutoLocation && childAutoLocation && !mapElmt2){
+        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope") && !sameAutoLocation && childAutoLocation && !result){
             $scope.openFullForm = false;
             $scope.$digest();
         } 
