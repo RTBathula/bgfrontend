@@ -22,7 +22,7 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
     //Call Operator
     $stateProvider.state('callOperatorSearch',
     {
-        url: 'localhost:1440/official/call/search',
+        url: '/call/search',
         templateUrl: 'app/views/callOperators/call-search.html',
         controller: 'callSearchController'                      
     });

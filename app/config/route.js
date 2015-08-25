@@ -1,10 +1,10 @@
 app.config(
 function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) {
     
-    $urlRouterProvider.otherwise('/');
+    //$urlRouterProvider.otherwise('/');
     $stateProvider.state('joblist',
     {
-        url: '/',
+        url: '',
         templateUrl: 'app/views/joblist/joblist.html',
         controller: 'jobListController'
     });

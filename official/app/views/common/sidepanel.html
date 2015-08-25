@@ -16,15 +16,14 @@
                 </div>
             </li>
             <li ng-class="{true: 'active'}[page=='companyDashboard']">
-                <a href="/data/view"><i class="fa fa-bar-chart"></i> <span class="nav-label">View jobs</span></a>
+                <a href="#/data/view"><i class="fa fa-bar-chart"></i> <span class="nav-label">View jobs</span></a>
             </li>
             <li ng-class="{true: 'active'}[page=='companyDashboard']">
-                <a href="/data/upsert/"><i class="fa fa-bar-chart"></i> <span class="nav-label">Post a job</span></a>
+                <a href="#/data/upsert/"><i class="fa fa-bar-chart"></i> <span class="nav-label">Post a job</span></a>
             </li>                    
         </ul>
 
     </div>
-
 
     <!--Call Operator-->
     <div ng-show="officialUser.get('isCallOperator')" class="sidebar-collapse">
@@ -43,11 +42,11 @@
                 </div>
             </li>
             <li ng-class="{true: 'active'}[page=='companyDashboard']">
-                <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">Search jobs</span></a>
+                <a href="#/call/search"><i class="fa fa-bar-chart"></i> <span class="nav-label">Search jobs</span></a>
             </li>
-            <li ng-class="{true: 'active'}[page=='companyDashboard']">
+            <!--<li ng-class="{true: 'active'}[page=='companyDashboard']">
                 <a href="#"><i class="fa fa-bar-chart"></i> <span class="nav-label">View SMS Data</span></a>
-            </li>                    
+            </li>-->                  
         </ul>
 
     </div>
