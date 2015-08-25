@@ -22,8 +22,8 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
         templateUrl: 'app/views/aboutUs.html'
     });
 
-    $locationProvider.hashPrefix('!');
-    $locationProvider.html5Mode(true);   
+    //$locationProvider.hashPrefix('!');
+    //$locationProvider.html5Mode(true);   
 
     //cors.
     $httpProvider.defaults.useXDomain = true;

@@ -16,10 +16,13 @@ var def_InterviewTypeId="PijOcjdk";//Online
 var def_IndustryId="rCy2eV91";//Information Technology
 
 var serverURL = null; 
+var domain=null;
 if(__isDevelopment){
-    serverURL="http://localhost:1444";   
+    serverURL="http://localhost:1444";
+    domain="http://localhost:1440";   
 }else{
-    serverURL="http://bgbackend.herokuapp.com";    
+    serverURL="http://bgbackend.herokuapp.com";
+    domain="http://www.bullgrunt.com";    
 }
 
 

@@ -1,5 +1,6 @@
 app.config(
 function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) {
+   // $urlRouterProvider.otherwise('http://localhost:1440/official/');
     //DataEntry Operator
     $stateProvider.state('dataOperatorView',
     {
@@ -21,7 +22,7 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
     //Call Operator
     $stateProvider.state('callOperatorSearch',
     {
-        url: '/call/search',
+        url: 'localhost:1440/official/call/search',
         templateUrl: 'app/views/callOperators/call-search.html',
         controller: 'callSearchController'                      
     });
@@ -39,6 +40,9 @@ function ($urlRouterProvider, $stateProvider, $httpProvider, $locationProvider) 
         templateUrl: 'app/views/callOperators/call-sent-msgs.html'           
     });
     //End of Call Operator
+
+    //$locationProvider.hashPrefix('!');
+    //$locationProvider.html5Mode(true);
 
 });
 

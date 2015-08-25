@@ -18,11 +18,11 @@ function ($scope,userServices) {
 				if(obj){
 					if(obj.get("isDataEntry")){
 						setEndUserCookie(obj);
-						window.location.href="http://localhost:1440/official/#/data/view"; 
+						window.location.href=domain+"/official/data/view"; 
 					}
 					if(obj.get("isCallOperator")){
 						setEndUserCookie(obj);
-						window.location.href="http://localhost:1440/official/#/call/search"; 					
+						window.location.href=domain+"/official/call/search"; 					
 					}
 					if(obj.get("isAdmin")){
 						setEndUserCookie(obj);
