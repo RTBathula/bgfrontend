@@ -630,20 +630,22 @@ function ($scope,
     $(document).click(function (e){
         var container = $("#app-full-form");
         var postJobModal=$("#enterPhone");
-        //var autoLocation=$(".ng-binding");
+        var autoLocation=$(".autolist");
         //var autoLocation2=$(".pac-item-query"); 
-        var mapElmt=$(e.target)[0].className;      
+        var mapElmt=$(e.target)[0].className;  
+        var mapElmt2=$(e.target)[0].hasClass(".pac-container");
+        //e.target.parentElement.className    
 
         var sameContainer=container.is(e.target) // if the target of the click isn't the container...
         var childContainer=container.has(e.target).length === 0;
         var samePostJobModal=postJobModal.is(e.target);
         var childPostJobModal=postJobModal.has(e.target).length === 0;
-        //var sameAutoLocation=autoLocation.is(e.target);
-        //var childAutoLocation=autoLocation.has(e.target).length === 0;
+        var sameAutoLocation=autoLocation.is(e.target);
+        var childAutoLocation=autoLocation.has(e.target).length === 0;
         //var sameAutoLocation2=autoLocation2.is(e.target);   
         //var childAutoLocation2=autoLocation.has(e.target).length === 0;     
 
-        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope")){
+        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope") && !sameAutoLocation && childAutoLocation && !mapElmt2){
             $scope.openFullForm = false;
             $scope.$digest();
         } 

@@ -24,13 +24,13 @@ $scope.$watch(function(scope) {
 		if(isDataEntry && strArray[1]=="call"){
 			window.location.href=domain+"/official/#/data/view";
 			//$state.transitionTo('dataOperatorView');
-			//$state.go('dataOperatorView');
+			$state.go('dataOperatorView');
 			//$scope.$digest() 
 			 
 		}else if(isCallOperator && strArray[1]=="data"){
 			window.location.href=domain+"/official/#/call/search"; 
 			//$state.transitionTo('callOperatorSearch');
-			//$state.transitionTo('callOperatorSearch');
+			$state.go('callOperatorSearch');
 			//$scope.$digest()
 		} 
 	}   
