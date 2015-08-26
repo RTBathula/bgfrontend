@@ -83,7 +83,7 @@ app.factory('jobServices', function ($http,$rootScope, $q,companyServices) {
          //cs.searchQuery.searchOn('title', designation.name);
         } 
         if(experience){        
-         cs.searchFilter.equalTo('experience', experience.range);
+         //cs.searchFilter.equalTo('experience', experience.range);
         } 
         if(company){        
          //cs.searchFilter.equalTo('experience', experience.range);
