@@ -1,5 +1,5 @@
 
-<section class="joblist-page" style="margin-top:-20px;" lr-infinite-scroll="addMoreJobs"> 
+<section  ng-show="!loadingBgJobs && !loadingError" class="joblist-page" style="margin-top:-20px;" lr-infinite-scroll="addMoreJobs"> 
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -56,7 +56,7 @@
                                                     </div>         
                                                     <!--Experience required-->                      
                                                     <div class="smartWidget-Input" >                                  
-                                                        <input type="text" ng-model="jobModel.experience" name="experience" placeholder="Experience" data-toggle="tooltip" data-placement="right" title="Experience">
+                                                        <input type="text" ng-model="jobModel.experience" name="experience" placeholder="Experience(Number)" data-toggle="tooltip" data-placement="right" title="Experience">
                                                     </div>
 
                                                     <!--Resume to(Email)-->
@@ -67,7 +67,7 @@
                                                     <!--Company Location-->
                                                     <div class="smartWidget-Input">
                                                        
-                                                        <input ng-model="companyLocation" g-places-autocomplete type="text" name="clocation"  id="comlocation" placeholder="Company Location"  data-toggle="tooltip" data-placement="right" title="Company Location">  
+                                                        <input ng-model="companyLocation" g-places-autocomplete options="autocompleteOptions" type="text" name="clocation"  id="comlocation" placeholder="Company Location"  data-toggle="tooltip" data-placement="right" title="Company Location">  
                                                                
                                                     </div>
 
@@ -95,7 +95,7 @@
                                                     <!--Walk in Location-->
                                                     <div class="smartWidget-Input" style="display: none" id="add-walkin">
                                                        
-                                                        <input ng-model="walkInLocation"  g-places-autocomplete type="text" name="wlocation"  id="walklocation" placeholder="Walk In Location(interview)"  data-toggle="tooltip" data-placement="right" title="Walk In Location">  
+                                                        <input ng-model="walkInLocation"  g-places-autocomplete type="text" name="wlocation"  id="walklocation" placeholder="WalkIn or Interview Location"  data-toggle="tooltip" data-placement="right" title="WalkIn(Interview) Location"> 
                                                                
                                                     </div>                              
 
@@ -147,7 +147,7 @@
 
                                                                 <!--Walk In Location-->
                                                                 <div class="pull-left optionalBtnz">
-                                                                    <a data-toggle="tooltip" data-placement="top" title="Walk In location"
+                                                                    <a data-toggle="tooltip" data-placement="top" title="WalkIn(interview) location"
                                                                        ng-click="toggle('add-walkin')">
                                                                         <i class="fa fa-map-marker fa-lg post-opt-icons"></i>
                                                                     </a>
@@ -293,10 +293,10 @@
                                                         </a>
                                                         <div ng-show="modifyJobOptions[$index]" class="modify-job-opts effect1">
                                                             <ul>
-                                                                <li ng-click="editJob($index)">
+                                                                <li ng-click="editJob($index,eachJob)">
                                                                     <a>Edit</a>
                                                                 </li>
-                                                                <li ng-click="deleteJob($index)">
+                                                                <li ng-click="deleteJob($index,eachJob)">
                                                                     <a>Delete</a>
                                                                 </li>                                
                                                             </ul>
@@ -321,8 +321,14 @@
         </div>
     </div>
 </section>
-
-
+<!--While Loading-->
+<section ng-show="loadingBgJobs || loadingError" class="loading-bg-jobs flex-general-column-wrapper-center">
+    <div class="flex-general-column-wrapper-center">
+        <i ng-show="loadingBgJobs && !loadingError" class="fa fa-spinner fa-spin fa-3x"></i>        
+        <span ng-show="!loadingBgJobs && loadingError" style="color:gray;font-size:20px;">Couldn't load jobs right now..</span>
+    </div>
+</section>
+<!--/While Loading-->   
 
 
 
@@ -331,7 +337,7 @@
   <div class="modal-dialog">
     <div class="modal-content mcontent-custom">
       <div >
-        <button type="button" class="close" ng-click="cancelPost()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button ng-if="!otpProccesing" type="button" class="close" ng-click="cancelPost()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="flex-general-row-wrapper-center">
             <h4 class="modal-title">Authentication</h4>
         </div>
@@ -351,13 +357,17 @@
 
                 <div class="flex-siblings-wrapper">
                     <div class="">                        
-                    <input  intlphone type="tel" id="mobile-number" class="form-control modalInput">  
+                        <input  intlphone type="tel" id="mobile-number" class="form-control modalInput">                          
                     </div> 
 
                      <div class="" style="margin-left:2px;">
-                         <button type="button" ng-click="sendOTP()" class=" btn-primary modalBtn">Send Code</button>
+                         <button ng-if="!otpProccesing" type="button" ng-click="sendOTP()" class=" btn-primary modalBtn">Send Code</button>
+                         <!--While Sending-->
+                         <button ng-if="otpProccesing" type="button" class=" btn-primary modalBtn">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Sending..</button>
                     </div>                       
-                </div>  
+                </div> 
+                <p style="color:red;">{{otpSendingError}}</p>  
 
               </div>
 
@@ -373,7 +383,11 @@
                         <input type="text" ng-model="userModel.otpCode" class="form-control modalInput" id="recipient-name"> 
                     </div> 
                     <div class="" style="margin-left:2px;">
-                         <button type="button" ng-click="verifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+                         <button ng-if="!otpProccesing" type="button" ng-click="verifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+
+                         <!--While Sending-->
+                         <button ng-if="otpProccesing" type="button" class=" btn-primary modalBtn">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Authenticating..</button>
                     </div>                       
                 </div>
                 <p style="color:red;">{{invalidOTPError}}</p>                               
@@ -386,12 +400,13 @@
                 <div class="flex-general-column-wrapper-center">
                     <div>
                         <a href="" ng-click="continueWithPhone()">Continue with this phone:</a>
-                        <span>{{userObj.get('phone')}}</span>
+                        <span>{{userObj.get('phone')}}</span>&nbsp;
+                        <i ng-show="otpProccesing" class="fa fa-spinner fa-spin"></i>
                     </div>
                     
-                    <div>OR</div>
+                    <div ng-show="!otpProccesing">OR</div>
                     
-                    <div>
+                    <div ng-show="!otpProccesing">
                         <a href="" ng-click="changePhone()">Change phone and send OTP</a>
                     </div>
                 </div>
@@ -415,13 +430,13 @@
   <div class="modal-dialog">
     <div class="modal-content mcontent-custom">
       <div >
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button ng-if="!otpProccesing" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
         <div class="flex-general-row-wrapper-center">
             <h4 class="modal-title">Delete Job Authentication</h4>
         </div>
       </div>
-      <div class="modal-body">
-         
+      <div class="modal-body">         
 
         <div class="modal-actual-content flex-general-row-wrapper-center">                
             
@@ -433,15 +448,20 @@
                 </div>
 
                 <div class="flex-general-row-wrapper-center">
-                <div class="flex-siblings-wrapper">
-                    <div class="">                        
-                     <input  intlphone type="tel" id="del-mobile-number" class="form-control modalInput2">  
-                    </div> 
+                    <div class="flex-siblings-wrapper">
+                        <div class="">                        
+                         <input  intlphone type="tel" id="del-mobile-number" class="form-control modalInput2">  
+                        </div> 
 
-                     <div class="" style="margin-left:2px;">
-                         <button type="button" ng-click="deleteSendOTP()" class=" btn-primary modalBtn2">Send Code</button>
-                    </div>                       
-                </div>
+                         <div class="" style="margin-left:2px;">
+                             <button ng-if="!otpProccesing" type="button" ng-click="deleteSendOTP()" class=" btn-primary modalBtn2">Send Code</button>
+                              <!--While Sending-->
+                             <button ng-if="otpProccesing" type="button" class=" btn-primary modalBtn">
+                                <i class="fa fa-spinner fa-spin"></i>&nbsp;Sending..</button>
+
+                        </div>                       
+                    </div>
+                    <p style="color:red;">{{otpSendingError}}</p>
                 </div>                
 
               </div>
@@ -453,17 +473,20 @@
                   
                 </div>
                 
-                <div class="flex-siblings-wrapper">
+                <div class="flex-general-row-wrapper-center">
                     <div class="">
                         <input type="text" ng-model="userOTP" class="form-control modalInput" id="recipient-name"> 
                     </div> 
                     <div class="" style="margin-left:2px;">
-                         <button type="button" ng-click="deleteVerifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+                         <button ng-if="!otpProccesing" type="button" ng-click="deleteVerifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+
+                         <!--While Sending-->
+                         <button ng-if="otpProccesing" type="button" class=" btn-primary modalBtn">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Authenticating..</button>
                     </div>                       
                 </div>
                 <p>{{invalidOTPError}}</p>                               
               </div>
-
         
         </div>
 
@@ -536,7 +559,7 @@
                                 <!--Company Location-->
                                 <div class="smartWidget-Input">
                                    
-                                    <input ng-model="editCompanyLocation" g-places-autocomplete type="text" name="eclocation"  id="editcomlocation" placeholder="Company Location"  data-toggle="tooltip" data-placement="right" title="Company Location">  
+                                    <input ng-model="editCompanyLocation" g-places-autocomplete type="text" options="autocompleteOptions" name="eclocation"  id="editcomlocation" placeholder="Company Location"  data-toggle="tooltip" data-placement="right" title="Company Location">  
                                            
                                 </div>
 
@@ -564,7 +587,7 @@
                                  <!--Walk in Location-->
                                 <div class="smartWidget-Input" style="display: none" id="edit-walkin">
                                    
-                                    <input ng-model="editWalkInLocation" g-places-autocomplete type="text" name="ewlocation"  id="edit-walklocation" placeholder="Walk In Location(interview)"  data-toggle="tooltip" data-placement="right" title="Walk In Location">  
+                                    <input ng-model="editWalkInLocation" g-places-autocomplete type="text" name="ewlocation"  id="edit-walklocation" placeholder="WalkIn(Interview) Location(interview)"  data-toggle="tooltip" data-placement="right" title="WalkIn(Interview) Location">  
                                            
                                 </div>                              
 
@@ -729,7 +752,7 @@
   <div class="modal-dialog">
     <div class="modal-content mcontent-custom">
       <div >
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button ng-if="!otpProccesing" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="flex-general-row-wrapper-center">
             <h4 class="modal-title">Edit Job Authentication</h4>
         </div>
@@ -747,35 +770,41 @@
                 </div>
 
                 <div class="flex-general-row-wrapper-center">
-                <div class="flex-siblings-wrapper">
-                    <div class="">                        
-                     <input  intlphone type="tel" id="edit-mobile-number" class="form-control modalInput2">  
-                    </div> 
+                    <div class="flex-siblings-wrapper">
+                        <div class="">                        
+                         <input  intlphone type="tel" id="edit-mobile-number" class="form-control modalInput2">  
+                        </div> 
 
-                     <div class="" style="margin-left:2px;">
-                         <button type="button" ng-click="editSendOTP()" class=" btn-primary modalBtn2">Send Code</button>
-                    </div>                       
-                </div>
+                         <div class="" style="margin-left:2px;">
+                            <button ng-if="!otpProccesing" type="button" ng-click="editSendOTP()" class=" btn-primary modalBtn2">Send Code</button>
+                            <!--While Sending-->
+                            <button ng-if="otpProccesing" type="button" class=" btn-primary modalBtn">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Sending..</button>
+                        </div>                       
+                    </div>
                 </div>                
-
+                <p style="color:red;">{{otpSendingError}}</p>  
               </div>
 
               <!--OTP number form-->
               <div ng-show="isOTPSentForEdit" class="form-group auth-form">
                 <div class="flex-general-row-wrapper-center">                 
-                  <p style="font-size:12px;color:black;">We have successfully sent OTP to your mobile, Enter OTP below <span class="anchor-link">(Re-send)</span></p>
+                  <p style="font-size:12px;color:black;">We have successfully sent OTP to your mobile, Enter OTP below <span class="anchor-link" ng-click="resend()">(Re-send)</span></p>
                   
                 </div>
                 
-                <div class="flex-siblings-wrapper">
+                <div class="flex-general-row-wrapper-center">
                     <div class="">
                         <input type="text" ng-model="userOTP" class="form-control modalInput" id="recipient-name"> 
                     </div> 
                     <div class="" style="margin-left:2px;">
-                         <button type="button" ng-click="editVerifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+                         <button ng-if="!otpProccesing" type="button" ng-click="editVerifyOTP()" class=" btn-primary modalBtn">Authenticate</button>
+                          <!--While Sending-->
+                         <button ng-if="otpProccesing" type="button" class=" btn-primary modalBtn">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Authenticating..</button>
                     </div>                       
                 </div>
-                <p>{{invalidOTPError}}</p>                               
+                <p style="color:red;">{{invalidOTPError}}</p>                               
               </div>
 
         

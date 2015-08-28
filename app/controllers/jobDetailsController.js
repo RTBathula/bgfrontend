@@ -13,6 +13,7 @@ function ($scope,
 	};
 
 	function getJobDetails(){
+		$scope.loadingBgJob=true;
 		jobServices.getJobDetails(jobId)
 		.then(function(jobDet){
 			if(jobDet){
@@ -24,8 +25,10 @@ function ($scope,
 				}        
 	            
 			}
+			$scope.loadingBgJob=false;
                                        
-        },function(error){                
+        },function(error){ 
+        	$scope.loadingBgJob=false;               
         }); 
 	}
 

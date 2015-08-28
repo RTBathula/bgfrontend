@@ -97,10 +97,12 @@ function ($scope,
 
     $scope.resend=function(){
         $scope.isOTPSent=false;
+        $scope.isOTPSentForEdit=false;
     }; 
 
     $scope.continueWithPhone=function(){
-        $("#enterPhone").modal("hide");
+        //$("#enterPhone").modal("hide");
+        $scope.otpProccesing=true;
         prepareCompanyAndSave();
     };
 
@@ -124,31 +126,49 @@ function ($scope,
         }
     }; 
 
-    $scope.sendOTP=function(){   
-        $scope.userModel.phone=$("#mobile-number").intlTelInput("getNumber");     
-        userServices.sendOTP($scope.userModel)
-        .then(function(user){
-            if(user){                
-             $scope.isOTPSent=true;
-             setEndUserCookie(user);
-             $scope.userObj=CB.fromJSON(user.document);
-            } 
-                                      
-        },function(error){ 
-           errorNotification("Something went wrong. Please try again..");               
-        });   
+    $scope.sendOTP=function(){ 
+        $scope.otpSendingError=null;  
+        $scope.userModel.phone=$("#mobile-number").intlTelInput("getNumber");  
+        if($scope.userModel.phone){
+            $scope.otpProccesing=true;
+            userServices.sendOTP($scope.userModel)
+            .then(function(user){
+                if(user){                
+                 $scope.isOTPSent=true;
+                 setEndUserCookie(user);
+                 $scope.userObj=CB.fromJSON(user.document);
+                }
+                $scope.otpProccesing=false; 
+                                          
+            },function(error){ 
+               $("#enterPhone").modal("hide");
+               $scope.otpProccesing=false;
+               errorNotification("Something went wrong. Please try again..");               
+            });
+        }else{
+            $scope.otpSendingError="Enter Valid Phone";
+        }   
+         
     };
 
     $scope.verifyOTP=function(){
         $scope.invalidOTPError=null;
-        userServices.verifyOTP($scope.userModel.phone,$scope.userModel.otpCode)
-        .then(function(userObj){          
-           $("#enterPhone").modal("hide");
-           prepareCompanyAndSave();                           
-        },function(error){    
-           $scope.invalidOTPError="This OTP is expired or timedout";                             
-        });
-
+        if($scope.userModel.otpCode){
+            $scope.otpProccesing=true;
+            userServices.verifyOTP($scope.userModel.phone,$scope.userModel.otpCode)
+            .then(function(userObj){          
+               //$("#enterPhone").modal("hide");
+               //$scope.otpProccesing=false;
+               $scope.userModel.otpCode=null;
+               prepareCompanyAndSave();                           
+            },function(error){    
+               $scope.invalidOTPError="This OTP is expired or timedout"; 
+               $scope.otpProccesing=false;   
+               $scope.userModel.otpCode=null;                         
+            });  
+        }else{
+            $scope.invalidOTPError="Enter Valid OTP";
+        }
     };
 
     function prepareCompanyAndSave(){
@@ -164,10 +184,14 @@ function ($scope,
                 .then(function(companyObj){
                     prepareJobAndSave(companyObj);
                 }, function(err){
+                    $("#enterPhone").modal("hide");
+                    $scope.otpProccesing=false;
                     errorNotification("Error in creating company..try again");  
                 });
 
             }, function(err){ 
+                $("#enterPhone").modal("hide");
+                $scope.otpProccesing=false;
                 errorNotification("Error in selecting Logo..try again"); 
             });
         }else{
@@ -175,6 +199,8 @@ function ($scope,
             .then(function(companyObj){
                 prepareJobAndSave(companyObj);
             }, function(err){
+                $("#enterPhone").modal("hide");
+                $scope.otpProccesing=false;
                 errorNotification("Error in creating company..try again"); 
             });
         }
@@ -192,55 +218,77 @@ function ($scope,
 
         jobServices.saveJob($scope.jobModel) 
         .then(function(jobObj){
+            $("#enterPhone").modal("hide");
+            $scope.otpProccesing=false;
+            $scope.openFullForm = false;
+
             if($scope.jobList && $scope.jobList.length>0){
                 $scope.jobList.push(jobObj);
             }else{
                 $scope.jobList=[];
                 $scope.jobList.push(jobObj);
-            }
-
-            successNotification("Successfully posted your job");
-            $scope.openFullForm = false;
+            }            
+            successNotification("Successfully posted your job");            
 
             nullifyFields();            
 
         }, function(err){ 
+            $("#enterPhone").modal("hide");
+            $scope.otpProccesing=false;
             errorNotification("We couldn't post your job now..try again");
         });              
         
     } 
 
-    $scope.deleteJob=function(index){
-        $scope.editableIndex=index;
+    $scope.deleteJob=function(index,job){
         $scope.modifyJobOptions[index]=false;
+        $scope.editableIndex=$scope.jobList.indexOf(job);        
         $("#deleteJob").modal();
     };
 
     $scope.deleteSendOTP=function(){ 
+        $scope.otpSendingError=null;
+
         var jobId=$scope.jobList[$scope.editableIndex].get("id");  
         $scope.userPhone=$("#del-mobile-number").intlTelInput("getNumber"); 
 
-        userServices.modifySendOTP($scope.userPhone,jobId,"delete")
-        .then(function(user){
-            if(user){
-             $scope.isOTPSentForDel=true;
-             setEndUserCookie(user);
-             $scope.userObj=CB.fromJSON(user.document);
-            } 
-                                      
-        },function(error){ 
-           errorNotification("Something went wrong. Please try again..");               
-        });   
+        if($scope.userPhone){
+            $scope.otpProccesing=true;
+            userServices.modifySendOTP($scope.userPhone,jobId,"delete")
+            .then(function(user){
+                if(user){
+                 $scope.isOTPSentForDel=true;
+                 setEndUserCookie(user);
+                 $scope.userObj=CB.fromJSON(user.document);
+                } 
+                $scope.otpProccesing=false;
+                                          
+            },function(error){ 
+               $("#deleteJob").modal("hide"); 
+               $scope.otpProccesing=false;
+               errorNotification("Something went wrong. Please try again..");               
+            }); 
+        }else{
+            $scope.otpSendingError="Enter Valid Phone";
+        }  
     };
 
     $scope.deleteVerifyOTP=function(){
         $scope.invalidOTPError=null;
-        userServices.verifyOTP($scope.userPhone,$scope.userOTP)
-        .then(function(userObj){          
-           deleteJob();                           
-        },function(error){    
-            $scope.invalidOTPError="We couldn't verify your OTP properly,try again..";                             
-        });
+        if($scope.userOTP){
+             $scope.otpProccesing=true;
+             userServices.verifyOTP($scope.userPhone,$scope.userOTP)
+            .then(function(userObj){          
+               deleteJob();                           
+            },function(error){ 
+                $scope.otpProccesing=false;
+                $("#deleteJob").modal("hide");    
+                $scope.invalidOTPError="We couldn't verify your OTP properly,try again..";                             
+            });
+        }else{
+            $scope.invalidOTPError="Invalid OTP";
+        }
+       
 
     };
 
@@ -253,17 +301,20 @@ function ($scope,
              $scope.userPhone=null;
              $scope.userOTP=null; 
              $scope.isOTPSentForDel=false;
-             $("#deleteJob").modal("hide");                       
+             $("#deleteJob").modal("hide");
+             $scope.otpProccesing=false; 
+             successNotification("Successfully deleted job");                           
         },function(error){    
-                                         
+            $scope.otpProccesing=false; 
+            $("#deleteJob").modal("hide");                               
         });
     }
 
-    $scope.editJob=function(index){
+    $scope.editJob=function(index,job){
         $scope.modifyJobOptions[index]=false;
-        $scope.editableIndex=index;       
+        $scope.editableIndex=$scope.jobList.indexOf(job);       
 
-        loadEditJob($scope.jobList[index]);
+        loadEditJob($scope.jobList[$scope.editableIndex]);
 
         $("#editJob").modal();
     };
@@ -323,31 +374,48 @@ function ($scope,
     };
 
     $scope.editSendOTP=function(){  
+        $scope.otpSendingError=null;
         var jobId=$scope.jobList[$scope.editableIndex].get("id");  
         $scope.userPhone=$("#edit-mobile-number").intlTelInput("getNumber"); 
 
-        userServices.modifySendOTP($scope.userPhone,jobId,"edit")
-        .then(function(user){
-            if(user){
-             $scope.isOTPSentForEdit=true;
-             setEndUserCookie(user);
-             $scope.userObj=CB.fromJSON(user.document);
-            } 
-                                      
-        },function(error){ 
-           errorNotification("Something went wrong. Please try again..");               
-        });   
+        if($scope.userPhone){
+            $scope.otpProccesing=true;
+            userServices.modifySendOTP($scope.userPhone,jobId,"edit")
+            .then(function(user){
+                if(user){
+                 $scope.isOTPSentForEdit=true;
+                 setEndUserCookie(user);
+                 $scope.userObj=CB.fromJSON(user.document);
+                } 
+                $scope.otpProccesing=false;                           
+            },function(error){ 
+                $("#editJobAuth").modal("hide");                
+                $scope.otpProccesing=false;
+                errorNotification("Something went wrong. Please try again..");               
+            });  
+        }else{
+            $scope.otpSendingError="Enter Valid Phone";
+        }
+         
     };
 
     $scope.editVerifyOTP=function(){
         $scope.invalidOTPError=null;
-        userServices.verifyOTP($scope.userPhone,$scope.userOTP)
-        .then(function(userObj){          
-           $("#editJobAuth").modal("hide");
-           prepareCompanyAndUpdate();                          
-        },function(error){    
-            $scope.invalidOTPError="We couldn't verify your OTP properly,try again..";                             
-        });
+        if($scope.userOTP){
+           $scope.otpProccesing=true; 
+           userServices.verifyOTP($scope.userPhone,$scope.userOTP)
+            .then(function(userObj){          
+               //$("#editJobAuth").modal("hide");
+               prepareCompanyAndUpdate();
+               $scope.userOTP=null;                          
+            },function(error){   
+                $scope.otpProccesing=false; 
+                $scope.invalidOTPError="We couldn't verify your OTP properly,try again..";  
+                $scope.userOTP=null;                         
+            });  
+        }else{
+            $scope.invalidOTPError="Enter Valid OTP";
+        }       
 
     };
 
@@ -363,10 +431,14 @@ function ($scope,
                 .then(function(companyObj){
                     prepareJobAndUpdate();
                 }, function(err){
+                    $("#editJobAuth").modal("hide");
+                $scope.otpProccesing=false;
                     errorNotification("Error in creating company..try again");  
                 });
 
-            }, function(err){ 
+            }, function(err){                 
+                $("#editJobAuth").modal("hide");
+                $scope.otpProccesing=false;
                 errorNotification("Error in selecting Logo..try again"); 
             });
         }else{
@@ -374,6 +446,8 @@ function ($scope,
             .then(function(companyObj){
                 prepareJobAndUpdate();
             }, function(err){
+                $("#editJobAuth").modal("hide");
+                $scope.otpProccesing=false;
                 errorNotification("Error in creating company..try again");  
             });
         }
@@ -393,12 +467,16 @@ function ($scope,
                 $scope.jobList[$scope.editableIndex]=jobObj;
             }
 
-            successNotification("Successfully posted your job");          
+            successNotification("Successfully updated your job"); 
+            $("#editJobAuth").modal("hide");
+            $scope.otpProccesing=false;         
 
             nullifyFields();            
 
         }, function(err){ 
-            errorNotification("We couldn't post your job now..try again");
+            $("#editJobAuth").modal("hide");
+            $scope.otpProccesing=false;
+            errorNotification("We couldn't update your job now..try again");
         });              
         
     }    
@@ -409,6 +487,8 @@ function ($scope,
     };
 
     function getJobList(){
+        $scope.loadingBgJobs=true;              
+
         jobServices.getJobList($scope.searchByLocation,
             $scope.filDateTime,
             $scope.filGradYear,
@@ -425,8 +505,11 @@ function ($scope,
               $scope.jobList=list;               
             }else{
               $scope.jobList=null;
-            }                                       
-        },function(error){                
+            } 
+            $scope.loadingBgJobs=false;                                       
+        },function(error){
+            $scope.loadingBgJobs=false;
+            $scope.loadingError=error;                
         }); 
     }
 
@@ -633,7 +716,7 @@ function ($scope,
         var autoLocation=$(".autolist");
         //var autoLocation2=$(".pac-item-query"); 
         var mapElmt=$(e.target)[0].className; 
-        var classNames=e.target.parentElement.className 
+        var classNames=e.target.parentElement.className; 
         
 
         //String.prototype.contains(searchString, startIndex);
@@ -705,7 +788,8 @@ function ($scope,
         jobTypeServices.getJobTypeList()
         .then(function(list){
            $scope.jobTypeList=list;                                     
-        },function(error){                
+        },function(error){  
+           $scope.loadingError=error;              
         });  
 
     }
@@ -713,14 +797,16 @@ function ($scope,
         interviewTypeServices.getInterviewTypeList()
         .then(function(list){
            $scope.interviewTypeList=list;                             
-        },function(error){                
+        },function(error){ 
+           $scope.loadingError=error;               
         });  
     }
     function getCompanyIndustryList(){
         companyIndustryServices.getCompanyIndustryList()
         .then(function(list){
            $scope.companyIndustryList=list;                             
-        },function(error){                
+        },function(error){ 
+           $scope.loadingError=error;               
         });  
     } 
 
@@ -988,7 +1074,7 @@ function ($scope,
         $scope.staticCompanyNameList=staticDataServices.getCompanyNames();
     }
     
-    $scope.selectLocation=function(index){
+    /*$scope.selectLocation=function(index){
         $scope.searchByLocation=$scope.staticLocationList[index];
         $scope.searchLocation();
     };
@@ -1055,7 +1141,7 @@ function ($scope,
         if($scope.filCompany){
            getJobList(); 
         }
-    };
+    };*/
            
 });
 

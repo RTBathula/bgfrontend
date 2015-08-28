@@ -1,4 +1,4 @@
-<section class="jobdetails-page" style="margin-top:-20px;"> 
+<section ng-show="!loadingBgJob && !loadingError" class="jobdetails-page" style="margin-top:-20px;"> 
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -140,3 +140,12 @@
         </div>
     </div>
 </section>
+
+<!--While Loading-->
+<section ng-show="loadingBgJob || loadingError" class="loading-bg-jobs flex-general-column-wrapper-center">
+    <div class="flex-general-column-wrapper-center">
+        <i ng-show="loadingBgJobs && !loadingError" class="fa fa-spinner fa-spin fa-3x"></i>        
+        <span ng-show="!loadingBgJobs && loadingError" style="color:gray;font-size:20px;">Couldn't load jobs right now..</span>
+    </div>
+</section>
+<!--/While Loading-->
