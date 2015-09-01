@@ -85,7 +85,7 @@
 	background-color:#242F39;
 }
 .bg-color-midred{
-	background-color:#006F47;
+	background-color:#0E1421;
 }
 
 .bg-color-lightgray{
@@ -760,5 +760,8 @@
 	padding-top: 20px;
 }
 .loading-bg-jobs{
+	height: 75vh;
+}
+.loading-bg-jobdetails{
 	height: 75vh;
 }

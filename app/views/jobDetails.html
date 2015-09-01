@@ -1,9 +1,9 @@
-<section ng-show="!loadingBgJob && !loadingError" class="jobdetails-page" style="margin-top:-20px;"> 
+<section ng-init="init()" ng-show="!loadingBgJob && !loadingError" class="jobdetails-page" style="margin-top:-20px;"> 
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-8 bg-color-white" ng-init="init()">
+                    <div class="col-md-8 bg-color-white">
                       <div class="row inner-div2">
                           <div class="col-md-12">
                               <div class="row">
@@ -142,8 +142,8 @@
 </section>
 
 <!--While Loading-->
-<section ng-show="loadingBgJob || loadingError" class="loading-bg-jobs flex-general-column-wrapper-center">
-    <div class="flex-general-column-wrapper-center">
+<section ng-show="loadingBgJob || loadingError" class="loading-bg-jobdetails flex-general-column-wrapper-center">
+    <div class="flex-general-column-wrapper-center">      
         <i ng-show="loadingBgJobs && !loadingError" class="fa fa-spinner fa-spin fa-3x"></i>        
         <span ng-show="!loadingBgJobs && loadingError" style="color:gray;font-size:20px;">Couldn't load jobs right now..</span>
     </div>

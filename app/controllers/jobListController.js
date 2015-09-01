@@ -43,6 +43,7 @@ function ($scope,
         getCompanyIndustryList();
 
         //Getting JobList
+        $scope.loadingBgJobs=true;     
         getJobList();
         loadAllStaticFilterData();
     };    
@@ -327,7 +328,7 @@ function ($scope,
 
         if($scope.editCompanyLocation){
             if(typeof $scope.editCompanyLocation!="string"){
-                var comloc = new CB.CloudGeoPoint($scope.editCompanyLocation.geometry.location.A,$scope.editCompanyLocation.geometry.location.F);
+                var comloc = new CB.CloudGeoPoint($scope.editCompanyLocation.geometry.location.G,$scope.editCompanyLocation.geometry.location.K);
                 var comLocationJson={
                     placeId:$scope.editCompanyLocation.place_id,            
                     address:$scope.editCompanyLocation.formatted_address,
@@ -344,7 +345,7 @@ function ($scope,
 
         if($scope.editWalkInLocation){
             if(typeof $scope.editWalkInLocation!="string"){
-                var wloc = new CB.CloudGeoPoint($scope.editWalkInLocation.geometry.location.A,$scope.editWalkInLocation.geometry.location.F);
+                var wloc = new CB.CloudGeoPoint($scope.editWalkInLocation.geometry.location.G,$scope.editWalkInLocation.geometry.location.K);
                 var walkInLocationJson={
                     placeId:$scope.editWalkInLocation.place_id,               
                     address:$scope.editWalkInLocation.formatted_address,
@@ -486,8 +487,7 @@ function ($scope,
         $("#editJob").modal("hide");
     };
 
-    function getJobList(){
-        $scope.loadingBgJobs=true;              
+    function getJobList(){                 
 
         jobServices.getJobList($scope.searchByLocation,
             $scope.filDateTime,
@@ -727,6 +727,7 @@ function ($scope,
         }  
 
         var result=classNames.contains("pac-container"); // true
+        var result2=classNames.contains("pac-item"); // true
 
         var sameContainer=container.is(e.target) // if the target of the click isn't the container...
         var childContainer=container.has(e.target).length === 0;
@@ -737,7 +738,7 @@ function ($scope,
         //var sameAutoLocation2=autoLocation2.is(e.target);   
         //var childAutoLocation2=autoLocation.has(e.target).length === 0;     
 
-        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope") && !sameAutoLocation && childAutoLocation && !result){
+        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope") && !sameAutoLocation && childAutoLocation && !result && !result2){
             $scope.openFullForm = false;
             $scope.$digest();
         } 
@@ -1074,7 +1075,7 @@ function ($scope,
         $scope.staticCompanyNameList=staticDataServices.getCompanyNames();
     }
     
-    /*$scope.selectLocation=function(index){
+    $scope.selectLocation=function(index){
         $scope.searchByLocation=$scope.staticLocationList[index];
         $scope.searchLocation();
     };
@@ -1090,7 +1091,7 @@ function ($scope,
        }
     };
     $scope.filterGradYear=function(index){
-       $scope.filGradYear=staticGraduationYearList[index];
+       $scope.filGradYear=$scope.staticGraduationYearList[index];
        if($scope.filGradYear){       
         getJobList();
        }
@@ -1141,7 +1142,7 @@ function ($scope,
         if($scope.filCompany){
            getJobList(); 
         }
-    };*/
+    };
            
 });
 

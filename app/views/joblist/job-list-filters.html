@@ -145,7 +145,7 @@
                 
                 <div class="searchBx searchBx-marginTop8 cf default-vals-vshort-div">                  
                     <ul class="search-list-ul">
-                        <li ng-repeat="iType in interviewTypeList" ng-click="filterInterviewType(index)">                          
+                        <li ng-repeat="iType in interviewTypeList" ng-click="filterInterviewType($index)">                          
                             <div><span class="def-simple-vals">{{iType.get("name")}}</span></div>                    
                         </li>                      
                                                   
@@ -254,9 +254,10 @@
     <!-- /row -->
 </div>
 
+<!--
 <div class="inner-div bg-color-white all-filters-list" ng-show="showFiltersMenu" style="margin-top:20px;">
     <!--row-->
-    <div class="row inner-div3">
+    <!--<div class="row inner-div3">
         <div class="col-md-12">
             <div>
                 <p class="fg-color-black search-filter-title">COMPANY NAME</p>
@@ -270,7 +271,7 @@
                     </div>
                                   
                 </div>-->
-                <div class="default-vals-div">
+                <!--<div class="default-vals-div">
                     <ul class="search-list-ul">
                         <li ng-repeat="cName in staticCompanyNameList" ng-click="filterCompany($index)"> 
                             <div><span class="def-simple-vals">{{cName.text}}</span></div>          
@@ -281,4 +282,5 @@
         </div>
     </div>
     <!-- /row -->
-</div>
+    <!--
+</div>-->

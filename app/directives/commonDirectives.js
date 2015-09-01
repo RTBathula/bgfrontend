@@ -16,6 +16,30 @@ app.directive('typed', function(){
     };
 });
 
+app.directive('txtshort', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+
+            var showChar = 60; // How many characters are shown by default
+            var ellipsestext = "...";           
+            $(element).each(function() {
+                var content = $(this).text();
+                content=content.trim();
+                content=content.replace(/\s+/, ""); 
+                if(content.length > showChar) {
+         
+                    var c = content.substr(0, showChar);                             
+                    var html = c + '' + ellipsestext;
+         
+                    $(this).text(html);
+                }
+         
+            });
+                        
+        }
+    };
+});
 
 app.directive('intlphone', function(){
     return {

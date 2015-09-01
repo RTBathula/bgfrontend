@@ -4,7 +4,7 @@ function ($scope,
 	jobServices,
 	uiGmapGoogleMapApi) {
 
-	var jobId;
+	var jobId;	
 	$scope.init=function(){		
 	    jobId = $stateParams.jobId;
 	   	if(jobId){
@@ -28,7 +28,8 @@ function ($scope,
 			$scope.loadingBgJob=false;
                                        
         },function(error){ 
-        	$scope.loadingBgJob=false;               
+        	$scope.loadingBgJob=false; 
+        	$scope.loadingError="Unable to shoe details right now..";              
         }); 
 	}
 

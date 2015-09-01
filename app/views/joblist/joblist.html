@@ -272,8 +272,8 @@
                                                                 <div style="width:100%; margin-top:-1.5px;">
                                                                     <span class="" style="margin:0; padding:0; font-size:14px;color:black">
                                                                     {{eachJob.get("title")}} 
-                                                                    <span style="color:black">
-                                                                        @ {{eachJob.get("companyLocationDetails").address}}
+                                                                    <span txtshort style="color:black">
+                                                                        @{{eachJob.get("companyLocationDetails").address}}
                                                                     </span></span>
                                                                 </div>  
                                                                 
@@ -305,8 +305,62 @@
                                                     <!--/Drop down menu-->
                                                     
                                                 </div>
+                                            </td>                                            
+                                        </tr> 
+                                        
+                                        <!--ttdgf-->
+                                        <tr>                                       
+                                            <td>
+                                                <div class="joblist-paddingLR cf">
+                                                    <!--Job summary-->
+                                                    <div class="pull-left cf" style="width:95%;">
+                                                        <a href="#">
+                                                            <div class="pull-left">
+                                                                <div class="company-logo-class-wrapper">                                        <img src="assets/images/default.png" class="company-logo-class">
+                                                                </div>
+                                                            </div>
+                                                            <div class="pull-left" style="margin-left:10px;width:80%;">
+                                                                <div style="width:100%;">
+                                                                    <span class="fg-color-joblist" style="margin:0; padding:0; font-size:16px;font-weight;">Microsoft</span>
+                                                                </div>
+                                                                <div style="width:100%; margin-top:-1.5px;" >
+                                                                    <span class="" style="margin:0; padding:0; font-size:14px;color:black">
+                                                                    MongoDB Developer<span txtshort style="color:black">
+                                                                        @Hyderabad, Telangana, India, world trade, hyderabd, america, idnai, austrlia, ohio, new zeland, china, japa, new york. 
+
+                                                                    </span></span>
+                                                                </div>  
+                                                                
+                                                                <div style="width:100%;margin-top:-1.5px;">
+                                                                    <span class="fg-color-softgray" style="margin:0; padding:0; font-size:14px;">5 min</span>
+                                                                </div>                                  
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <!--/Job summary-->
+
+                                                    <!--Drop down menu-->
+                                                    <div class="pull-right mdfyDrpdwn-div"> 
+                                                        <a class="modifybtn" ng-click="modifyJobOptions[$index]=!modifyJobOptions[$index]">
+                                                          <i class="fa fa-angle-down fg-color-softgray"></i>
+                                                        </a>
+                                                        <div ng-show="modifyJobOptions[$index]" class="modify-job-opts effect1">
+                                                            <ul>
+                                                                <li ng-click="editJob($index,eachJob)">
+                                                                    <a>Edit</a>
+                                                                </li>
+                                                                <li ng-click="deleteJob($index,eachJob)">
+                                                                    <a>Delete</a>
+                                                                </li>                                
+                                                            </ul>
+                                                        </div>
+                                                   </div>
+                                                    <!--/Drop down menu-->
+                                                    
+                                                </div>
                                             </td>
-                                        </tr>                                     
+                                            </tr>
+                                                                                   
                                     </table>
                                 </div>
                             </div>
@@ -399,8 +453,10 @@
             <div ng-if="userObj && userObj.get('phone') && continueExistUser" class="form-group">
                 <div class="flex-general-column-wrapper-center">
                     <div>
-                        <a href="" ng-click="continueWithPhone()">Continue with this phone:</a>
-                        <span>{{userObj.get('phone')}}</span>&nbsp;
+                        <a href="" ng-show="!otpProccesing" ng-click="continueWithPhone()">Continue with this phone:</a>
+                        <span ng-show="!otpProccesing">{{userObj.get('phone')}}</span>&nbsp;
+
+                        <span ng-show="otpProccesing">Posting your job</span>
                         <i ng-show="otpProccesing" class="fa fa-spinner fa-spin"></i>
                     </div>
                     
@@ -587,7 +643,7 @@
                                  <!--Walk in Location-->
                                 <div class="smartWidget-Input" style="display: none" id="edit-walkin">
                                    
-                                    <input ng-model="editWalkInLocation" g-places-autocomplete type="text" name="ewlocation"  id="edit-walklocation" placeholder="WalkIn(Interview) Location(interview)"  data-toggle="tooltip" data-placement="right" title="WalkIn(Interview) Location">  
+                                    <input ng-model="editWalkInLocation" g-places-autocomplete type="text" name="ewlocation"  id="edit-walklocation" placeholder="WalkIn(Interview) Location"  data-toggle="tooltip" data-placement="right" title="WalkIn(Interview) Location">  
                                            
                                 </div>                              
 

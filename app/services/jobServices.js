@@ -37,11 +37,12 @@ app.factory('jobServices', function ($http,$rootScope, $q,companyServices) {
         var q = $q.defer(); 
        
         var cs = new CB.CloudSearch("Job");
-        cs.searchFilter = new CB.SearchFilter();
-        //cs.searchQuery = new CB.SearchQuery();
+        //cs.searchFilter = new CB.SearchFilter();
+        var searchFilter = new CB.SearchFilter();
+        cs.searchQuery = new CB.SearchQuery();
 
-        //cs.orderByDesc('updatedAt');
-        //cs.searchFilter.include('_company');
+        cs.orderByDesc('updatedAt');
+       // cs.searchFilter.include('_company');
 
         //var query = new CB.CloudQuery("Job");  
         //query.orderByDesc('updatedAt'); 
@@ -53,43 +54,70 @@ app.factory('jobServices', function ($http,$rootScope, $q,companyServices) {
           //query.near("companyLocationGeopoint", loc, 100000); 
         } 
         if(dateObj){
-         //cs.searchFilter.equalTo('dateTime', dateObj); 
+            var searchFilter1 = new CB.SearchFilter();
+            searchFilter1.equalTo('dateTime', dateObj); 
+            searchFilter.or(searchFilter1);
         }
-        if(gradYear){        
-         //cs.searchQuery.searchOn('description', gradYear.value);
+        if(gradYear){  
+            var obj1 = new CB.SearchQuery();            
+            obj1.searchOn('description', gradYear.value);
+            cs.searchQuery.or(obj1);
         }
-        if(academicGrade){        
-         //cs.searchQuery.searchOn('description', academicGrade.range);
+        if(academicGrade){     
+            var obj2 = new CB.SearchQuery();   
+            obj2.searchOn('description', academicGrade.range.from);
+            cs.searchQuery.or(obj2);
+
+            var academicObj2 = new CB.SearchQuery();   
+            academicObj2.searchOn('description', academicGrade.range.to);
+            cs.searchQuery.or(academicObj2);
         }
-        if(degreeName){        
-         //cs.searchQuery.searchOn('description', degreeName.name);
+        if(degreeName){      
+            var obj3 = new CB.SearchQuery();     
+            obj3.searchOn('description', degreeName.name);
+            cs.searchQuery.or(obj3);
         } 
         if(interviewTypeObj){
-            var interviewTypeCBObj = new CB.CloudObject('InterviewType',interviewTypeObj.get("id"));
-           // cs.searchFilter.equalTo('_interviewType', interviewTypeCBObj);
+            var searchFilter2 = new CB.SearchFilter();
+            //var interviewTypeCBObj = new CB.CloudObject('InterviewType',interviewTypeObj.get("id"));
+            searchFilter2.equalTo('_interviewType', interviewTypeObj);
+            searchFilter.or(searchFilter2);
         }
         if(skillsList && skillsList.length>0){
             for(var i=0;i<skillsList.length;++i){
                 if(skillsList[i].checked){
-                    //cs.searchQuery.searchOn('description', skillsList[i].name);
+                    var skillObj = new CB.SearchQuery();   
+                    skillObj.searchOn('description', skillsList[i].name);
+                    cs.searchQuery.or(skillObj);
                 }
             }
         }
         if(sectorTypeObj){
-          var sectorTypeCBObj = new CB.CloudObject('JobType',sectorTypeObj.get("id"));
-          //cs.searchFilter.equalTo('_jobType', sectorTypeCBObj);
+            var searchFilter3 = new CB.SearchFilter();
+            //var sectorTypeCBObj = new CB.CloudObject('JobType',sectorTypeObj.get("id"));
+            searchFilter3.equalTo('_jobType', sectorTypeObj);
+            searchFilter.or(searchFilter3);
         } 
-        if(designation){        
-         //cs.searchQuery.searchOn('title', designation.name);
+        if(designation){             
+            var titleObj = new CB.SearchQuery();    
+            titleObj.searchOn('title', designation.name);
+            cs.searchQuery.or(titleObj);
         } 
-        if(experience){        
-         //cs.searchFilter.equalTo('experience', experience.range);
+        if(experience){  
+            var searchFilter5 = new CB.SearchFilter();       
+            searchFilter5.equalTo('experience', experience.range.from);
+            searchFilter.or(searchFilter5);
+
+            var searchFilter6 = new CB.SearchFilter();       
+            searchFilter6.equalTo('experience', experience.range.to);
+            searchFilter.or(searchFilter6);
         } 
         if(company){        
          //cs.searchFilter.equalTo('experience', experience.range);
         }    
         //End Filters              
 
+        cs.searchFilter = searchFilter;
         cs.search({success: function(list) {           
           q.resolve(list); 
         },error: function(err) {

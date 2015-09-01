@@ -19,4 +19,9 @@ app.set('port', process.env.PORT || 1440);
 var server = app.listen(app.get('port'), function() {
 	console.log("Port "+app.get('port')+" is ON");
 	console.log("Man cannot survive except through his mind!");
+	//ac:00000034185047569
+	//andhraac:123910100024061
+	//safilguda
+	//jyothi kumari,
+	//sbi. ecil.
 });
