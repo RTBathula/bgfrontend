@@ -1,4 +1,4 @@
-<section ng-init="init()" ng-show="!loadingBgJob && !loadingError" class="jobdetails-page" style="margin-top:-20px;"> 
+<section ng-init="init()" ng-show="!loadingBgJob && !loadingError" class="jobdetails-page dpfont2" style="margin-top:-20px;"> 
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -6,19 +6,21 @@
                     <div class="col-md-8 bg-color-white">
                       <div class="row inner-div2">
                           <div class="col-md-12">
-                              <div class="row">
+                              <div class="row bg-color-kaggle">
                                   <div class="col-md-12">
                                       <div class="cf">
-                                          <h5 class="pull-right">
+                                          <h5 class="pull-right dpfont2" style="color:#646568;">
                                             <strong>{{jobDetails.get("updatedAt")  | date:'medium'}}</strong>
                                           </h5>
                                       </div>
                                       <div class="compantImg">
-                                          <img src="{{jobDetails.get('_company').get('logo').url}}">
+                                          <img ng-show="jobDetails.get('_company').get('logo').url" src="{{jobDetails.get('_company').get('logo').url}}">
+
+                                          <img ng-show="!jobDetails.get('_company').get('logo').url" src="assets/images/default.png">
                                       </div>
                                       <div>
                                       </div>
-                                      <h3 class="companyName">
+                                      <h3 class="companyName dpfont2" style="margin-top:8px;;margin-left:4px;">
                                         <strong>{{jobDetails.get('_company').get('name')}}</strong>
                                       </h3>
 
@@ -32,80 +34,80 @@
 
                                   <div class="col-md-12" style="margin-top:12px;">
                                      <div ng-if="jobDetails.get('title')" class="parent">
-                                          <h4><strong>Title</strong></h4>
+                                          <h4 class="jd-headz">Title</h4>
                                      </div>
                                      <div class="child">
-                                          <p>{{jobDetails.get('title')}}</p>
+                                          <p class="jd-tailz">{{jobDetails.get('title')}}</p>
                                      </div>
 
                                      <div ng-if="jobDetails.get('experience')" class="parent margin-top-25px">
-                                          <h4><strong>Experience</strong></h4>
+                                          <h4 class="jd-headz">Experience</h4>
                                      </div>
                                      <div ng-if="jobDetails.get('experience') && jobDetails.get('experience')==0" class="child">
-                                          <p>Fresher</p>
+                                          <p class="jd-tailz">Fresher</p>
                                      </div>
                                      <div ng-if="jobDetails.get('experience') && jobDetails.get('experience')>0" class="child">
-                                          <p>{{jobDetails.get('experience')}}&nbsp; years</p>
+                                          <p class="jd-tailz">{{jobDetails.get('experience')}}&nbsp; years</p>
                                      </div>
 
                                      <div ng-if="jobDetails.get('_jobType').get('name')" class="parent margin-top-25px">
-                                          <h4><strong>Job type</strong></h4>
+                                          <h4 class="jd-headz">Job type</h4>
                                      </div>
                                      <div class="child">
-                                          <p>{{jobDetails.get('_jobType').get('name')}}</p>
+                                          <p class="jd-tailz">{{jobDetails.get('_jobType').get('name')}}</p>
                                      </div>
 
                                       <div ng-if="jobDetails.get('companyLocationDetails') && jobDetails.get('companyLocationDetails').address" class="parent margin-top-25px">
-                                          <h4><strong>Company Location</strong></h4>
+                                          <h4 class="jd-headz">Company Location</h4>
                                      </div>
                                      <div class="child">
-                                          <p>{{jobDetails.get('companyLocationDetails').address}}</p>
+                                          <p class="jd-tailz">{{jobDetails.get('companyLocationDetails').address}}</p>
                                      </div>
 
                                      <div ng-if="jobDetails.get('description')" class="parent margin-top-25px">
-                                          <h4><strong>Description</strong></h4>
+                                          <h4 class="jd-headz">Description</h4>
                                      </div>
                                      <div class="child">
-                                          <p>{{jobDetails.get('description')}}
+                                          <p class="jd-tailz">{{jobDetails.get('description')}}
                                           </p>
                                      </div>
 
                                      <div ng-if="jobDetails.get('_interviewType') && jobDetails.get('_interviewType').get('name')" class="parent margin-top-25px">
-                                          <h4><strong>Interview Type</strong></h4>
+                                          <h4 class="jd-headz">Interview Type</h4>
                                      </div>
                                      <div class="child">
-                                          <p>{{jobDetails.get('_interviewType').get('name')}}
+                                          <p class="jd-tailz">{{jobDetails.get('_interviewType').get('name')}}
                                           </p>
                                      </div>
 
                                       <div ng-if="jobDetails.get('dateTime')" class="parent margin-top-25px">
-                                          <h4><strong>DateTime</strong></h4>
+                                          <h4 class="jd-headz">DateTime</h4>
                                      </div>
                                      <div class="child">
-                                          <p>{{jobDetails.get('dateTime') | date:'medium'}}
+                                          <p class="jd-tailz">{{jobDetails.get('dateTime') | date:'medium'}}
                                           </p>
                                      </div>
 
                                      <div ng-if="jobDetails.get('resumeTo')" class="parent margin-top-25px">
-                                          <h4><strong>Email</strong></h4>
+                                          <h4 class="jd-headz">Email</h4>
                                      </div>
                                      <div class="child">
-                                          <p>
+                                          <p class="jd-tailz">
                                               {{jobDetails.get('resumeTo')}}
                                           </p>
                                      </div>
 
                                       <div ng-if="jobDetails.get('phone')"  class="parent margin-top-25px">
-                                          <h4><strong>Phone</strong></h4>
+                                          <h4 class="jd-headz">Phone</h4>
                                      </div>
                                      <div class="child">
-                                          <p>
+                                          <p class="jd-tailz">
                                               {{jobDetails.get('phone')}}
                                           </p>
                                      </div>
 
                                      <div ng-if="jobDetails.get('applyLink')!='http://'" class="parent margin-top-25px">
-                                          <h4><strong>Apply Here</strong></h4>
+                                          <h4 class="jd-headz">Apply Here</h4>
                                      </div>
                                      <div ng-if="jobDetails.get('applyLink')!='http://'" class="child">
                                           <p style="font-size:18px;">
@@ -115,10 +117,10 @@
 
 
                                      <div ng-if="jobDetails.get('walkInLocationDetails') && jobDetails.get('walkInLocationDetails').address" class="parent margin-top-25px">
-                                          <h4><strong>Address</strong></h4>
+                                          <h4 class="jd-headz">Address</h4>
                                      </div>
                                      <div class="child">
-                                          <p>
+                                          <p class="jd-tailz">
                                               {{jobDetails.get('walkInLocationDetails').address}}
                                           </p>
                                      </div>

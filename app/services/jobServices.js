@@ -42,7 +42,7 @@ app.factory('jobServices', function ($http,$rootScope, $q,companyServices) {
         cs.searchQuery = new CB.SearchQuery();
 
         cs.orderByDesc('updatedAt');
-       // cs.searchFilter.include('_company');
+        //cs.searchFilter.include('_company');
 
         //var query = new CB.CloudQuery("Job");  
         //query.orderByDesc('updatedAt'); 

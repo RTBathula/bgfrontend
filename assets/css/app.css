@@ -95,6 +95,10 @@
 .bg-color-white{
 	background-color:white;
 }
+.bg-color-kaggle{
+	background-color:#F7F7F7;
+}
+
 .bg-color-black{
 	background-color:black;
 }
@@ -255,12 +259,31 @@
 	box-shadow:none;
 	outline:none;
 }
+.partialPostJob{
+	font-size:16px; 
+	color:black;
+}
+.partial-widget input::-webkit-input-placeholder {
+   font-size: 16px;
+   font-family: 'Open Sans', sans-serif;
+   color: #007CA9;
+}
+.partial-widget input:-moz-placeholder {
+   font-size: 16px; 
+   font-family: 'Open Sans', sans-serif; 
+   color: #007CA9; 
+}
+.partial-widget input:-ms-input-placeholder {
+   font-size: 16px; 
+   font-family: 'Open Sans', sans-serif; 
+   color: #007CA9;
+}
 .abtCompanyTxtArea{
 	height:140px;
 }
 .postBtn{
-	border:1px solid green;
-	background-color:#006F47 !important;
+	border:1px solid #07ABED;
+	background-color:#20BEFF !important;
 	color:white;
 	height: 27px;
 
@@ -744,14 +767,10 @@
 	outline: none !important;
 }
 
-.joblist-page{	
-	height:83.9vh;
-	overflow: auto;
+.joblist-page{		
 	padding-top: 20px;
 }
 .jobdetails-page{	
-	height:83.89vh;
-	overflow: auto;
 	padding-top: 20px;
 }
 .aboutus-page{
@@ -764,4 +783,20 @@
 }
 .loading-bg-jobdetails{
 	height: 75vh;
+}
+.dpfont { 
+	font-family: 'Merriweather', serif;
+	font-weight: 400; 
+}
+.dpfont2{
+	font-family: 'Open Sans', sans-serif;
+}
+.jd-headz{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 24px;
+	color: #646568;	
+}
+.jd-tailz{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;	
 }
