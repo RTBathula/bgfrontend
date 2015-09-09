@@ -738,7 +738,7 @@ function ($scope,
         //var sameAutoLocation2=autoLocation2.is(e.target);   
         //var childAutoLocation2=autoLocation.has(e.target).length === 0;     
 
-        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="ng-binding ng-scope") && !sameAutoLocation && childAutoLocation && !result && !result2){
+        if (!sameContainer && childContainer && !samePostJobModal && childPostJobModal && (mapElmt!="k-link") && (mapElmt!="ng-binding ng-scope") && !sameAutoLocation && childAutoLocation && !result && !result2){
             $scope.openFullForm = false;
             $scope.$digest();
         } 
